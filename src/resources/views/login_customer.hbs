@@ -1,0 +1,17 @@
+<h1>Login - Customer</h1>
+{{#if message}}
+  <div class="{{message}}">{{message}}</div>
+{{/if}}
+<form method="POST" action="/customer/login">
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" required />
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" required />
+  </div>
+  <div>
+    <input type="submit" value="Login" />
+  </div>
+</form>

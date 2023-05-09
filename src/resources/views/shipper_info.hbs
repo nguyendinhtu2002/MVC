@@ -1,0 +1,26 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Shipper Information</h1>
+    <ul>
+      <li>Username: {{shipper.username}}</li>
+      {{!-- <p>{{shipper.profile_picture.data.toString}}</p> --}}
+      <li>Profile Picture:
+        <img
+          src="data:{{shipper.contentType}};base64,{{shipper.imageBase64}}"
+          class="card-img-top"
+          class="img-fluid"
+          alt="..."
+        />
+      </li>
+      {{!-- <li>Distribution Hub: {{shipper.password}}</li> --}}
+    </ul>
+
+  </body>
+</html>

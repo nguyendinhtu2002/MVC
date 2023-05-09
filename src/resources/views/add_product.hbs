@@ -1,0 +1,29 @@
+
+
+<!-- products/form.hbs: Hiển thị biểu mẫu để thêm hoặc cập nhật sản phẩm -->
+<form action="/vendor/create_product" method="POST" enctype="multipart/form-data">
+  {{#if message}}
+    <div class="alert alert-{{ messageType }}" role="alert">{{ message }}</div>
+  {{/if}}
+  <div class="form-group">
+    <label for="name">Product name:</label>
+    <input type="text" class="form-control" id="name" name="name" value="{{ product.name }}"{{#if viewOnly}} readonly{{/if}}>
+  </div>
+  <div class="form-group">
+    <label for="price">Price:</label>
+    <input type="number" class="form-control" id="price" name="price" value="{{ product.price }}">
+  </div>
+  <div class="form-group">
+    <label for="imageUrl">Image URL:</label>
+  <input type="file" id="profile_picture" name="profile_picture" /><br /><br />
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea class="form-control" id="description" name="description">{{ product.description }}</textarea>
+  </div>
+  {{#if viewOnly}}
+    <a href="/products/{{ product._id }}/edit" class="btn btn-primary">Edit product</a>
+  {{else}}
+    <button type="submit" class="btn btn-primary">Save</button>
+  {{/if}}
+</form>

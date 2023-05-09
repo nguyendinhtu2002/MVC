@@ -1,0 +1,23 @@
+<h1>Register Vendor</h1>
+
+<p>{{message}}</p>
+
+<form method="POST" action="/vendor/register" enctype="multipart/form-data">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" /><br /><br />
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" /><br /><br />
+
+  <label for="business_name">Business Name:</label>
+  <input type="text" id="business_name" name="business_name" /><br /><br />
+
+  <label for="business_address">Business Address:</label>
+  <input type="text" id="business_address" name="business_address" /><br /><br
+  />
+
+  <label for="profile_picture">Profile Picture:</label>
+  <input type="file" id="profile_picture" name="profile_picture" /><br /><br />
+
+  <input type="submit" value="Submit" />
+</form>

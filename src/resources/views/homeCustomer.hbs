@@ -1,0 +1,14 @@
+<h1>Example App: Home Customer</h1>
+<p>
+  {{message}}
+</p>
+<ul>
+  {{#each products}}
+    <li><a href="/products/{{this._id}}">{{this.name}}</a></li>
+
+  {{/each}}
+</ul>
+<form action="customer/logout" method="POST">
+
+  <button type="submit">Logout</button>
+</form>

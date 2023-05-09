@@ -1,0 +1,29 @@
+<h1>Vendor Information</h1>
+
+  <li>Username: {{vendor.username}}</li>
+  <li>name: {{vendor.name}}</li>
+  <li>business_name: {{vendor.business_name}}</li>
+  <li>business_address: {{vendor.business_address}}</li>
+  <li>Profile Picture:
+    <img
+      src="data:{{vendor.contentType}};base64,{{vendor.imageBase64}}"
+      class="card-img-top"
+      class="img-fluid"
+      alt="..."
+    />
+  </li>
+  <form
+    action="/vendor/change_profile"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <label for="profile_picture">Profile Picture:</label>
+    <input
+      type="file"
+      name="profile_picture"
+      id="profile_picture"
+      accept="image/*"
+    />
+    <button type="submit">Change Profile Picture</button>
+  </form>
+</ul>

@@ -1,0 +1,22 @@
+<h1>Register Shipper</h1>
+
+<p>{{message}}</p>
+
+<form method="POST" action="/shipper/register" enctype="multipart/form-data">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" /><br /><br />
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" /><br /><br />
+
+  <label for="distributionHub">Distribution:</label>
+  <select name="distributionHub">
+    {{#each data}}
+    <option value="{{this._id}}">{{this.name}}</option>
+    {{/each}}
+  </select><br /><br />
+  <label for="profile_picture">Profile Picture1:</label>
+  <input type="file" id="profile_picture" name="profile_picture" /><br /><br />
+
+  <input type="submit" value="Submit" />
+</form>

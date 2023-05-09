@@ -1,0 +1,25 @@
+<p>
+    {{message}}
+</p>
+<h1>Orders</h1>
+<ul>
+    {{#each data}}
+    <li>
+        <h2>Order {{@index}}</h2>
+        <p>Total: {{this.total}}</p>
+        <p>Created at: {{this.createdAt}}</p>
+        <p>Distribution hub: {{this.distributionHub}}</p>
+
+        <ul>
+            {{#each this.cart}}
+            <li>
+                <p>Product {{@index}}</p>
+                <p>ID: {{this.id}}</p>
+                <p>Price: {{this.price}}</p>
+                <p>Count: {{this.count}}</p>
+            </li>
+            {{/each}}
+        </ul>
+    </li>
+    {{/each}}
+</ul>

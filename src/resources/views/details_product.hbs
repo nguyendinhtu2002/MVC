@@ -1,0 +1,38 @@
+<h1>Product Detail</h1>
+<div>
+  <h3>{{product.name}}</h3>
+  <p>{{product.description}}</p>
+  <p><strong>Price: </strong>{{product.price}}</p>
+  <li>Profile Picture:
+    <img src="data:{{product.contentType}};base64,{{product.imageBase64}}" width="50%" height="50%" alt="..." />
+  </li>
+  <button id="add-to-cart">Add to Cart</button>
+  <a href="/products/orders">
+    Order
+  </a>
+  <script>
+    // Get the product information
+    const product = {
+      id: "{{ product._id }}",
+      price: "{{ product.price }}",
+      count: 1
+    };
+
+    // Add event listener to the Add to Cart button
+    const addToCartButton = document.getElementById("add-to-cart");
+    addToCartButton.addEventListener("click", () => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+      if (existingProductIndex !== -1) {
+        // Sản phẩm đã có trong giỏ hàng
+        cart[existingProductIndex].count++;
+      } else {
+        // Sản phẩm chưa có trong giỏ hàng
+        cart.push(product);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+    });
+  </script>
+</div>

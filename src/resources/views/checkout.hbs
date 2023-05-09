@@ -1,0 +1,61 @@
+<h1>
+    Order
+</h1>
+<div id="orders">
+
+    {{#if data}}
+    <form id="order-form">
+        <label for="distributionHub">Distribution Hub:</label>
+        <select name="distributionHub">
+            {{#each data}}
+            <option value="{{this._id}}">{{this.name}}</option>
+            {{/each}}
+        </select>
+    </form>
+    {{/if}}
+
+</div>
+<button id="place-order">Place Order</button>
+
+<script>
+    // Get the "Orders" element
+    const ordersElement = document.getElementById("orders");
+    const placeOrderButton = document.getElementById("place-order");
+
+    // Get the cart from local storage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Loop through the products in the cart and add them to the "Orders" element
+    cart.forEach((product) => {
+        const orderElement = document.createElement("div");
+        orderElement.innerHTML = `
+    {{!-- <h3>Name:${product.name}</h3> --}}
+    <p>Price: ${product.price}</p>
+    <p>Quantity: ${product.count}</p>
+    
+  `;
+        ordersElement.appendChild(orderElement);
+    });
+
+    placeOrderButton.addEventListener("click", () => {
+        // Get the value of the selected option
+
+        const selectedOption = document.querySelector('select[name="distributionHub"] option:checked').value;
+
+        // Post the order
+        axios.post('/api/orders', { cart: cart,distributionHub: selectedOption }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(function (response) {
+                alert("Order placed successfully!");
+                localStorage.removeItem("cart");
+
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+</script>
