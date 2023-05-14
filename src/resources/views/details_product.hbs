@@ -1,15 +1,49 @@
-<h1>Product Detail</h1>
-<div>
-  <h3>{{product.name}}</h3>
-  <p>{{product.description}}</p>
-  <p><strong>Price: </strong>{{product.price}}</p>
-  <li>Profile Picture:
-    <img src="data:{{product.contentType}};base64,{{product.imageBase64}}" width="50%" height="50%" alt="..." />
-  </li>
-  <button id="add-to-cart">Add to Cart</button>
-  <a href="/products/orders">
-    Order
-  </a>
+
+
+<main>
+  <div style="background-color: #8D8C8C;">
+    <input type="checkbox" id="check1" name="check1">
+    <nav class="container nav1">
+      <ul>
+        <li><a href="customer_page.html">Home</a></li>
+        <li><a href="#">Product</a></li>
+        <li><a href="#">Service</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </nav>
+    <label for="check1" class="checkbtn1">
+      <i class="fa fa-bars"></i>
+      <span class="category-text">CATEGORIES</span>
+    </label>
+  </div>
+  <div class="container details" data-product-id="1">
+    <div class="left-column">
+      <img src="data:{{product.contentType}};base64,{{product.imageBase64}}" alt="Hình ảnh lớn" class="idProduct">
+    </div>
+    <div class="right-column">
+      <h1 class="product-name">{{product.name}}</h1>
+      <div class="rating">
+        <strong>4.0</strong>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+      </div>
+      <div class="sold">Đã bán: 100</div>
+      <div class="priceProduct">
+        <div class="bprice">$</div>
+        <div class="priceP">{{product.price}}</div>
+      </div>
+      <div class="quantity">
+        <strong>Quantity: </strong>
+        <button class="subtract-button">-</button>
+        <input type="text" class="quantity-input" value="1">
+        <button class="add-button">+</button>
+      </div>
+      <button class="add-to-cart-button">Thêm vào giỏ hàng</button>
+    </div>
+  </div>
   <script>
     // Get the product information
     const product = {
@@ -35,4 +69,4 @@
       localStorage.setItem("cart", JSON.stringify(cart));
     });
   </script>
-</div>
+</main>

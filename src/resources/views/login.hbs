@@ -1,0 +1,92 @@
+<main>
+    <div class="container">
+        <div class="white-div d-flex align-items-center justify-content-center">
+            <div class="row">
+
+                <div class="col-md-6 text-white p-4 text-center">
+                    <img src="image/simple_logo.png" alt="" style="width: 100%; padding: 2vw 10vw 0 10vw;">
+                    <b class="lead" style="color: #DE4F11; font-weight: 700; font-size: xx-large;">SIMPLE OUTLET</b>
+                </div>
+                <div class="col-md-6 bg-white p-4">
+                    <form>
+                        <b style="font-size: x-large;">Log In</b>
+                        <div class="form-group d-flex justify-content-center">
+                            <input type="text" class="form-control" placeholder="Phone/Email" style="margin-top: 2vw;">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Password" style="margin-top: 3vw;">
+                        </div>
+                        <button type="submit" class="btn"
+                            style="width: 100%; background-color: #DE4F11; color: white; font-size: x-large; margin-top: 10vw;"><b>Login</b></button>
+                    </form>
+                    <div style="position: relative; padding: 100px;">
+                        <hr style="border-top: 1px solid black; margin: 0; width: 100%;">
+                        <div
+                            style="background-color: white; padding: 10px; position: absolute; top: 76px; left: 50%; transform: translateX(-50%);">
+                            New To Simple? </div>
+                        <a href=""><button type="submit" class="btn"
+                                style="width: 100%; background-color: #DE4F11; color: white; font-size: x-large; margin-top: 5vw;"><b>Sign
+                                    up</b></button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const imageInput = document.getElementById("input-image");
+        const imagePreview = document.getElementById("preview-image");
+
+        imageInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = "#";
+            }
+        });
+
+        // Get references to the password input fields and the message element
+        const passwordInput = document.getElementById('input-password');
+        const password2Input = document.getElementById('input-password2');
+        const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+        // Function to check if passwords match
+        function checkPasswordsMatch() {
+            const password = passwordInput.value;
+            const password2 = password2Input.value;
+
+            if (password === password2) {
+                passwordMatchMessage.textContent = 'Passwords match.';
+                passwordMatchMessage.classList.remove('text-danger');
+                passwordMatchMessage.classList.add('text-success');
+            } else {
+                passwordMatchMessage.textContent = 'Passwords do not match.';
+                passwordMatchMessage.classList.remove('text-success');
+                passwordMatchMessage.classList.add('text-danger');
+            }
+        }
+
+        // Add event listener to the second password input field
+        password2Input.addEventListener('input', checkPasswordsMatch);
+    </script>
+    </script>
+    <style>
+        .white-div {
+            background-color: #034266;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+
+</main>

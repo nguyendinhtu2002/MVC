@@ -30,6 +30,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       maxlength: 500,
     },
+    
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

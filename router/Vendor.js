@@ -19,13 +19,13 @@ const {
 const router = express.Router();
 router.get("/register", getRegister);
 router.get("/", getHome);
-router.post("/register", store.single("profile_picture"), register);
+router.post("/register", store.single("profilePicture"), register);
 router.get("/login", getHome);
 router.post("/login", Login);
 router.get("/profile", checkAuth, checkVendor, getSingleVendor);
 router.post("/logout", Logout);
-router.post("/change_profile", store.single("profile_picture"), updatePicture);
+router.post("/change_profile", store.single("profilePicture"), updatePicture);
 router.get("/create_product", checkAuth, checkVendor, getCreateProduct);
-router.post("/create_product", store.single("profile_picture"), createProduct);
+router.post("/create_product", store.single("profilePicture"), createProduct);
 router.get('/list_product',listProduct)
 module.exports = router;

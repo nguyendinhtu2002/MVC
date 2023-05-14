@@ -13,7 +13,7 @@ router.get("/register", async(req, res) => {
   }
   res.render("register_shipper",{data});
 });
-router.post("/register", store.single("profile_picture"), register);
+router.post("/register", store.single("profilePicture"), register);
 
 router.get("/login",getHome);
 router.post("/login", Login);

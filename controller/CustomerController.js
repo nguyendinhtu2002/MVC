@@ -2,7 +2,6 @@ const Customer = require("../model/Customer");
 const Joi = require("joi");
 const expressAsyncHandler = require("express-async-handler");
 const fs = require("fs");
-const { generateToken, refreshToken } = require("../utils/generateToken");
 
 const getHome = async (req, res) => {
   if (req.session.user) {
@@ -40,7 +39,7 @@ const register = async (req, res, next) => {
     });
   }
   try {
-    const { username, password, profile_picture, name, address } = req.body;
+    const { username, password, name, address } = req.body;
 
     const existingCustomer = await Customer.findOne({ username });
     if (existingCustomer) {
@@ -99,13 +98,13 @@ const Login = expressAsyncHandler(async (req, res, next) => {
       });
     } else {
       const message = "Invalid username or password";
-      return res.render("login_vendor", { message });
+      return res.render("login_customer", { message });
     }
   } catch (error) {
     console.log(error);
 
     const message = "Internal server error";
-    return res.render("login_vendor", { message });
+    return res.render("login_customer", { message });
   }
 });
 const Logout = expressAsyncHandler(async (req, res, next) => {

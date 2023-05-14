@@ -41,7 +41,7 @@ const createProduct = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("/vendor/list_product");
+        res.redirect("/");
       }
     );
   } catch (error) {

@@ -30,8 +30,14 @@ const register = async (req, res, next) => {
   });
   const { error } = schema.validate(req.body);
   if (error) {
+    const errors = {};
+    error.details.forEach((err) => {
+      const path = err.path[0];
+      errors[path] = true;
+    });
     return res.render("register_shipper", {
       message: error.details[0].message,
+      errors,
     });
   }
   try {
@@ -63,7 +69,7 @@ const register = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("/shipper/login");
+        return res.render("login_succes");
       }
     );
   } catch (error) {
@@ -122,29 +128,29 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
 
 const getAll = async (req, res, next) => {
   const shipper = await Shipper.findOne({ _id: req.session.user.id }).lean();
-  if(shipper){
+  if (shipper) {
     const data = await Order.find({ "distributionHub": shipper.distributionHub }).lean()
-    if(data){
-      return res.render("shipper_order",{data})
+    if (data) {
+      return res.render("shipper_order", { data })
     }
-    else{
-      return res.render("shipper_order",{message:"Khong co san pham nao"})
+    else {
+      return res.render("shipper_order", { message: "Khong co san pham nao" })
 
     }
   }
-  else{
-    return res.render("shipper_order",{message:"Chua login"})
+  else {
+    return res.render("shipper_order", { message: "Chua login" })
   }
 
 }
 
-const getbyId = async(req,res,next)=>{
-   const data = await Order.findById(req.params.id)
-   if(data){
+const getbyId = async (req, res, next) => {
+  const data = await Order.findById(req.params.id)
+  if (data) {
     return res.json(data)
-   }
-   else{
-    return res.json({message:"Khong co san pham nao"})
-   }
+  }
+  else {
+    return res.json({ message: "Khong co san pham nao" })
+  }
 }
-module.exports = { register, Login, getHome, Logout, getAll,getbyId };
+module.exports = { register, Login, getHome, Logout, getAll, getbyId };

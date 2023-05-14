@@ -1,22 +1,116 @@
-<h1>Register Shipper</h1>
 
-<p>{{message}}</p>
 
-<form method="POST" action="/shipper/register" enctype="multipart/form-data">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" /><br /><br />
 
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" /><br /><br />
+<main>
+  <div class="container-fluid" style="padding: 0;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+      <div class="text-white text-center display-1">Create Account</div>
+    </div>
+  </div>
 
-  <label for="distributionHub">Distribution:</label>
-  <select name="distributionHub">
-    {{#each data}}
-    <option value="{{this._id}}">{{this.name}}</option>
-    {{/each}}
-  </select><br /><br />
-  <label for="profile_picture">Profile Picture1:</label>
-  <input type="file" id="profile_picture" name="profile_picture" /><br /><br />
+  <div class="container">
+    <div class="white-div d-flex align-items-center justify-content-center">
+      <div class="row">
 
-  <input type="submit" value="Submit" />
-</form>
+        <div class="col">
+          <div class="justify-content-center d-flex">
+            <img id="preview-image" src="/image/no-image.png" alt="Preview Image" style="max-width: 50%; height: auto;">
+          </div>
+          <h3 class="text-center">Your image</h3>
+          <form method="POST" action="/shipper/register" enctype="multipart/form-data">
+            <div class="form-group m-2">
+              <input type="file" class="form-control" id="input-image" name="profilePicture" placeholder="avatar">
+            </div>
+            <div class="form-group m-2">
+              <input type="text" class="form-control" id="input-name" name="username" placeholder="username">
+              {{#if errors.username}}
+              <small style="color:red;">Please choose another username</small>
+              {{/if}}
+
+
+            </div>
+            <div class="form-group m-2">
+              <input type="password" class="form-control" id="input-password" placeholder="Password" name="password">
+              {{#if errors.password}}
+              <small style="color:red;">{{message}}</small>
+              {{/if}}
+
+            </div>
+            <div class="form-group m-2">
+              <input type="password" class="form-control" id="input-password2" placeholder="Re enter password" required>
+              <small id="passwordMatchMessage"></small>
+            </div>
+
+            <div class="form-group m-2">
+
+              <select name="distributionHub" class="form-control" id="input-hub">
+                {{#each data}}
+                <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center">
+              <button style="width:70%; background-color:#DE4F11; color: white;" type="submit"
+                class="btn rounded-pill">NEXT</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const imageInput = document.getElementById("input-image");
+    const imagePreview = document.getElementById("preview-image");
+
+    imageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = "#";
+      }
+    });
+    const passwordInput = document.getElementById('input-password');
+    const password2Input = document.getElementById('input-password2');
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+    // Function to check if passwords match
+    function checkPasswordsMatch() {
+      const password = passwordInput.value;
+      const password2 = password2Input.value;
+
+      if (password === password2) {
+        passwordMatchMessage.textContent = 'Passwords match.';
+        passwordMatchMessage.classList.remove('text-danger');
+        passwordMatchMessage.classList.add('text-success');
+      } else {
+        passwordMatchMessage.textContent = 'Passwords do not match.';
+        passwordMatchMessage.classList.remove('text-success');
+        passwordMatchMessage.classList.add('text-danger');
+      }
+    }
+
+    // Add event listener to the second password input field
+    password2Input.addEventListener('input', checkPasswordsMatch);
+  </script>
+  <style>
+    .white-div {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+
+
+
+</main>
