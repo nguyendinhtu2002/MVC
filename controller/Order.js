@@ -5,7 +5,7 @@ const createOrder = async (req, res) => {
     const { cart,distributionHub } = req.body;
 
     try {
-        const total = cart.reduce((acc, product) => acc + product.price * product.count, 0);
+        const total = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);
 
         const order = await Order.create({
             cart,

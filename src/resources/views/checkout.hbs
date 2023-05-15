@@ -1,61 +1,90 @@
-<h1>
-    Order
-</h1>
-<div id="orders">
+<main>
+    <div style="background-color: #8D8C8C;">
+        <input type="checkbox" id="check1" name="check1">
+        <nav class="container nav1">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Product</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+        <label for="check1" class="checkbtn1">
+            <i class="fa fa-bars"></i>
+            <span class="category-text">CATEGORIES</span>
+        </label>
+    </div>
+    <div class="container path">
+        <a class="logo" href="http://localhost:5000/">
+            <b>SIMPLE</b>
+        </a>
+        <a class="pathlast" href="#">
+            Shopping Cart
+        </a>
+    </div>
 
-    {{#if data}}
-    <form id="order-form">
-        <label for="distributionHub">Distribution Hub:</label>
-        <select name="distributionHub">
-            {{#each data}}
-            <option value="{{this._id}}">{{this.name}}</option>
-            {{/each}}
-        </select>
-    </form>
-    {{/if}}
 
-</div>
-<button id="place-order">Place Order</button>
+    <div class="container tbheader">
+        <div class="header1">Product </div>
+        <div>Unit Price</div>
+        <div>Quantity</div>
+        <div>Total price</div>
+        <div></div>
+    </div>
 
+    <table class="container cart">
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="container voucher">
+        <div></div>
+        <div class="checkout">
+            <img src="/image/voucher.png" alt=""> <b>Platform Voucher</b>
+        </div>
+        <div class="back">
+            <a href="#">Select or Enter code</a>
+        </div>
+    </div>
+    <div class="container DueForOder"><strong class="FinalTotal"><strong>Total amount due for the order </strong> </div>
+
+    <div class="container btncheckout">
+        <div></div>
+        <div class="checkout">
+            <a href="#" id="place-order">Check out</a>
+        </div>
+        <div class="back">
+            <a href="/">Continue Shopping</a>
+        </div>
+    </div>
+
+</main>
 <script>
-    // Get the "Orders" element
-    const ordersElement = document.getElementById("orders");
-    const placeOrderButton = document.getElementById("place-order");
-
-    // Get the cart from local storage
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const placeOrderButton = document.getElementById("place-order");
+    const productsWithoutImages = cart.map(({ id, name, price, quantity }) => ({ id, name, price, quantity }));
 
-    // Loop through the products in the cart and add them to the "Orders" element
-    cart.forEach((product) => {
-        const orderElement = document.createElement("div");
-        orderElement.innerHTML = `
-    {{!-- <h3>Name:${product.name}</h3> --}}
-    <p>Price: ${product.price}</p>
-    <p>Quantity: ${product.count}</p>
-    
-  `;
-        ordersElement.appendChild(orderElement);
-    });
+    axios.get("/api/dis")
+        .then((response) => {
+            const selectedOption = response.data;
 
-    placeOrderButton.addEventListener("click", () => {
-        // Get the value of the selected option
-
-        const selectedOption = document.querySelector('select[name="distributionHub"] option:checked').value;
-
-        // Post the order
-        axios.post('/api/orders', { cart: cart,distributionHub: selectedOption }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(function (response) {
-                alert("Order placed successfully!");
-                localStorage.removeItem("cart");
-
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
+            placeOrderButton.addEventListener("click", () => {
+                axios.post('/api/orders', { cart: productsWithoutImages, distributionHub: selectedOption[0]._id }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(function (response) {
+                        alert("Order placed successfully!");
+                        localStorage.removeItem("cart");
+                        console.log(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             });
-    });
+        })
+        .catch((error) => {
+            console.log(error)
+        });
 </script>

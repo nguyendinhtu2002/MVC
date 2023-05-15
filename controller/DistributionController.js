@@ -26,15 +26,23 @@ const createDistribution = async (req, res, next) => {
             return res.status(400).json({ message: "Address đã tồn tại" });
         }
         const newDistribution = new DistributionHub({
-           name,
-           address
+            name,
+            address
         });
         await newDistribution.save();
 
-        return res.status(200).json({message:"Thanh cong",newDistribution})
+        return res.status(200).json({ message: "Thanh cong", newDistribution })
     } catch (error) {
         next(error)
     }
 }
 
-module.exports ={createDistribution}
+const getRandom = async (req, res, next) => {
+    try {
+        const data = await DistributionHub.aggregate([{ $sample: { size: 1 } }])
+        return res.json(data)
+    } catch (error) {
+        next(error)
+    }
+}
+module.exports = { createDistribution,getRandom }
