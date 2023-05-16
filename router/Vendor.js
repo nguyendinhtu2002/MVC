@@ -4,9 +4,8 @@ const {
   Login,
   getRegister,
   getHome,
-  getSingleVendor,
   Logout,
-  updatePicture,
+  updateProfile,
 } = require("../controller/VendorController");
 const store = require("../middlerware/multer");
 const { checkAuth, checkVendor } = require("../middlerware/AuthMiddlerware");
@@ -22,9 +21,8 @@ router.get("/", getHome);
 router.post("/register", store.single("profilePicture"), register);
 router.get("/login", getHome);
 router.post("/login", Login);
-router.get("/profile", checkAuth, checkVendor, getSingleVendor);
 router.post("/logout", Logout);
-router.post("/change_profile", store.single("profilePicture"), updatePicture);
+router.post("/change_profile", store.single("profilePicture"), updateProfile);
 router.get("/create_product", checkAuth, checkVendor, getCreateProduct);
 router.post("/create_product", checkAuth,checkVendor,store.single("profilePicture"), createProduct);
 router.get('/list_product',listProduct)

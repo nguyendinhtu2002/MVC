@@ -91,7 +91,7 @@ const register = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("/vendor/login");
+        res.redirect("/login");
       }
     );
   } catch (error) {
@@ -113,7 +113,7 @@ const Login = expressAsyncHandler(async (req, res, next) => {
       req.session.isLoggedInVendor = true;
       const message = "Success";
 
-      return res.render("login_vendor", { message }, (err, html) => {
+      return res.render("login", { message }, (err, html) => {
         if (err) {
           // console.error(err);
           return res.status(500).send("Internal server error");
@@ -122,27 +122,15 @@ const Login = expressAsyncHandler(async (req, res, next) => {
       });
     } else {
       const message = "Invalid username or password";
-      return res.render("login_vendor", { message });
+      return res.render("login", { message });
     }
   } catch (error) {
     const message = "Internal server error";
-    return res.render("login_vendor", { message });
+    return res.render("login", { message });
   }
 });
 
-const getSingleVendor = expressAsyncHandler(async (req, res, next) => {
-  try {
-    // console.log(req.user)
-    const vendor = await Vendor.findById(req.session.user.id).lean();
-    if (vendor) {
-      return res.render("vendor_info", { vendor });
-    }
-  } catch (error) {
-    console.log(error);
-    const message = "Internal server error";
-    return res.render("vendor_info", { message });
-  }
-});
+
 const Logout = expressAsyncHandler(async (req, res, next) => {
   req.session.destroy((err) => {
     if (err) {
@@ -152,15 +140,17 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
       });
     }
     res.clearCookie("connect.sid");
-    res.redirect("/vendor/login");
+    res.redirect("/login");
   });
 });
-const updatePicture = expressAsyncHandler(async (req, res, next) => {
+const updateProfile = expressAsyncHandler(async (req, res, next) => {
   const files = req.file;
   if (!files) {
+    console.log("File is missing")
     return res.render("vendor_info", { message: "File is missing" });
   }
   try {
+    const { business_name, business_address } = req.body;
     const vendor = await Vendor.findById(req.session.user.id);
     if (vendor) {
       // Update the profile picture
@@ -170,12 +160,16 @@ const updatePicture = expressAsyncHandler(async (req, res, next) => {
       vendor.filename = files.originalname;
       vendor.contentType = files.mimetype;
       vendor.imageBase64 = encode_image;
-
+      if (business_name !== "") {
+        vendor.business_name = business_name;
+      }
+      if(business_address!==""){
+        vendor.business_address = business_address;
+      }
       await vendor.save();
-
       req.session.message = "Profile picture updated successfully";
       req.session.messageType = "success";
-      return res.redirect("/vendor/profile");
+      return res.redirect("/info");
     } else {
       return res.render("vendor_info", { message: "Vendor not found" });
     }
@@ -192,7 +186,6 @@ module.exports = {
   Login,
   getRegister,
   getHome,
-  getSingleVendor,
   Logout,
-  updatePicture,
+  updateProfile,
 };

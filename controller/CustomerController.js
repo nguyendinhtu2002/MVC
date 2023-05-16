@@ -116,7 +116,7 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
       });
     }
     res.clearCookie("connect.sid");
-    res.redirect("/customer/login");
+    res.redirect("/login");
   });
 });
 module.exports = { register, Login, getHome, Logout };

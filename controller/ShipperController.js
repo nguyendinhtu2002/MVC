@@ -122,7 +122,7 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
       });
     }
     res.clearCookie("connect.sid");
-    res.redirect("/shipper/login");
+    res.redirect("/login");
   });
 });
 
@@ -153,4 +153,39 @@ const getbyId = async (req, res, next) => {
     return res.json({ message: "Khong co san pham nao" })
   }
 }
-module.exports = { register, Login, getHome, Logout, getAll, getbyId };
+
+const updateProfile = expressAsyncHandler(async (req, res, next) => {
+  const files = req.file;
+  if (!files) {
+    return res.render("shipper_info", { message: "File is missing" });
+  }
+  try {
+    const { hub } = req.body;
+    const shipper = await Shipper.findById(req.session.user.id);
+    if (shipper) {
+      // Update the profile picture
+      let img = fs.readFileSync(req.file.path);
+      const encode_image = img.toString("base64");
+
+      shipper.filename = files.originalname;
+      shipper.contentType = files.mimetype;
+      shipper.imageBase64 = encode_image;
+      if (hub !== "") {
+        shipper.distributionHub = hub;
+      }
+      
+      await shipper.save();
+      req.session.message = "Profile picture updated successfully";
+      req.session.messageType = "success";
+      return res.redirect("/info");
+    } else {
+      return res.render("shipper_info", { message: "Shipper not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    req.session.message = "Internal server error";
+    req.session.messageType = "error";
+    return res.redirect("/info");
+  }
+});
+module.exports = { register, Login, getHome, Logout, getAll, getbyId,updateProfile };
