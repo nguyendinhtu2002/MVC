@@ -3,7 +3,8 @@ const { register, Login, getHome, Logout, getAll, getbyId } = require("../contro
 const router = express.Router();
 const Shipper = require("../model/Shipper");
 const store = require('../middlerware/multer');
-const DistributionHub = require("../model/DistributionHub")
+const DistributionHub = require("../model/DistributionHub");
+const { checkShipper, checkAuth } = require("../middlerware/AuthMiddlerware");
 
 router.get("/register", async(req, res) => {
   const data = await DistributionHub.find({}).lean()
@@ -32,6 +33,6 @@ router.get("/:id", async (req, res) => {
 });
 router.post("/logout", Logout);
 
-router.get("/getALL/test",getAll)
-router.get("/getDetail/:id",getbyId)
+router.get("/getALL/test",checkAuth,checkShipper,getAll)
+router.get("/getDetail/:id",checkAuth,checkShipper,getbyId)
 module.exports = router;

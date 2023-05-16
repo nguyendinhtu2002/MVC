@@ -26,6 +26,6 @@ router.get("/profile", checkAuth, checkVendor, getSingleVendor);
 router.post("/logout", Logout);
 router.post("/change_profile", store.single("profilePicture"), updatePicture);
 router.get("/create_product", checkAuth, checkVendor, getCreateProduct);
-router.post("/create_product", store.single("profilePicture"), createProduct);
+router.post("/create_product", checkAuth,checkVendor,store.single("profilePicture"), createProduct);
 router.get('/list_product',listProduct)
 module.exports = router;

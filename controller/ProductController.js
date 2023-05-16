@@ -12,7 +12,7 @@ const createProduct = async (req, res, next) => {
     return res.render("add_product", { message: "File is missing" });
   }
   const productSchema = Joi.object({
-    name: Joi.string().min(10).max(20).required(),
+    name: Joi.string().min(10).required(),
     price: Joi.number().min(1).required(),
     description: Joi.string().max(500),
   });
@@ -56,7 +56,7 @@ const listProduct = async (req, res, next) => {
   const products = await Product.find({ user: req.session.user.id }).lean();
   const data = await DistributionHub.find({}).lean();
   if (products) {
-    return res.render("list_product", { products,data });
+    return res.render("list_product", { products, data });
   } else {
     return res.render("list_product", { message: "Khong co san pham nao" });
   }
@@ -72,18 +72,46 @@ const listAll = async (req, res, next) => {
 };
 
 const getDetailsProduct = async (req, res, next) => {
-  
-  const product = await Product.findOne({_id:req.params.id}).lean();
-  if(product){
-    return res.render("details_product",{product})
+
+  const product = await Product.findOne({ _id: req.params.id }).lean();
+  if (product) {
+    return res.render("details_product", { product })
   }
-  else{
-    return res.render("details_product",{message:"Khong tim thay san pham"})
+  else {
+    return res.render("details_product", { message: "Khong tim thay san pham" })
   }
 };
 
-const checkOut  = async(req,res,next)=>{
+const checkOut = async (req, res, next) => {
   const data = await DistributionHub.find({}).lean();
-  return res.render("checkout",{data})
+  return res.render("checkout", { data })
 }
-module.exports = { createProduct, getCreateProduct, listProduct, listAll,getDetailsProduct,checkOut };
+
+const findByProduct = async (req, res, next) => {
+  try {
+
+    // console.log("Alo")
+    const products = await Product.find({ name: req.query.query }).lean();
+    // return res.json(products)
+    return res.render("homeCustomer", {
+      products, helpers: {
+        ifCond: function (v1, operator, v2, options) {
+          switch (operator) {
+            case '==':
+              return (v1 % v2 == 0) ? options.fn(this) : options.inverse(this);
+            case '%':
+              return ((v1 + 1) % v2 == 0) ? options.fn(this) : options.inverse(this);
+            default:
+              return options.inverse(this);
+          }
+        }
+      }
+    });
+  } catch (error) {
+    // console.log(error)
+    return res.render("homeCustomer", { message: "Error" });
+
+    // next(error);
+  }
+};
+module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct };

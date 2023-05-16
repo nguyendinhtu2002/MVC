@@ -16,9 +16,26 @@ const checkVendor = (req, res, next) => {
 
   next();
 };
+const checkShipper = (req, res, next) => {
+  // Nếu session không tồn tại user hoặc user không phải là vendor, chuyển hướng người dùng về trang đăng nhập
+  if (!req.session.user || req.session.user.type !== "Shipper") {
+    return res.redirect("/shipper/login");
+  }
 
+  next();
+};
+const checkCustomer = (req, res, next) => {
+  // Nếu session không tồn tại user hoặc user không phải là vendor, chuyển hướng người dùng về trang đăng nhập
+  if (!req.session.user || req.session.user.type !== "Customer") {
+    return res.redirect("/customer/login");
+  }
+
+  next();
+};
 
 module.exports = {
   checkAuth,
   checkVendor,
+  checkShipper,
+  checkCustomer
 };

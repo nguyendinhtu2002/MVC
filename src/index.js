@@ -15,6 +15,9 @@ const connectDatabase = require("../config/MongoDb.js");
 const Product = require("../model/Product");
 const app = express();
 const path = require("path")
+const bodyParser = require('body-parser');
+const { create } = require('express-handlebars');
+
 
 dotenv.config();
 connectDatabase();
@@ -23,7 +26,7 @@ app.set("trust proxy", true);
 app.use(express.json())
 app.use(cors());
 app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const store = new MongoDBStore({
   uri: process.env.MONGODB_URL,
@@ -47,24 +50,23 @@ app.use(
     },
   })
 );
-// const hbs = handlebars.create({
-//   // Specify helpers which are only registered on this instance.
-//   helpers: {
-//     ifCond: function (v1, operator, v2, options) {
-//       switch (operator) {
-//         case '==':
-//           return (v1 % v2 == 0) ? options.fn(this) : options.inverse(this);
-//         case '%':
-//           return ((v1 + 1) % v2 == 0) ? options.fn(this) : options.inverse(this);
-//         default:
-//           return options.inverse(this);
-//       }
-//     },
-//     foo() { return 'FOO!'; },
+const hbs = create({
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+    ifCond: function (v1, operator, v2, options) {
+      switch (operator) {
+        case '==':
+          return (v1 % v2 == 0) ? options.fn(this) : options.inverse(this);
+        case '%':
+          return ((v1 + 1) % v2 == 0) ? options.fn(this) : options.inverse(this);
+        default:
+          return options.inverse(this);
+      }
+    },
 
-//   }
-// });
-app.engine("handlebars", handlebars.engine());
+  }
+});
+app.engine('handlebars', hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
 app.use(express.static(path.join(__dirname, '../public')));
