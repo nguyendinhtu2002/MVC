@@ -191,7 +191,7 @@ app.post("/login", async (req, res) => {
         });
       } else {
         const message = "Invalid username or password";
-        console.log(message)
+        console.log(message);
         return res.render("login", { message });
       }
     } catch (error) {
@@ -209,7 +209,7 @@ app.post("/login", async (req, res) => {
         };
         req.session.isLoggedInVendor = true;
         const message = "Success";
-        console.log(message)
+        console.log(message);
         return res.render("login", { message }, (err, html) => {
           if (err) {
             // console.error(err);
@@ -227,9 +227,33 @@ app.post("/login", async (req, res) => {
     }
   }
 });
-app.get("/service",(req,res)=>{
-  return res.render("home_service")
-})
+app.get("/service", (req, res) => {
+  return res.render("home_service");
+});
+app.get("/contact", (req, res) => {
+  return res.render("contact");
+});
+app.get("/product", async (req, res) => {
+  const products = await Product.find({}).lean();
+
+  return res.render("Product", {
+    products,
+    helpers: {
+      ifCond: function (v1, operator, v2, options) {
+        switch (operator) {
+          case "==":
+            return v1 % v2 == 0 ? options.fn(this) : options.inverse(this);
+          case "%":
+            return (v1 + 1) % v2 == 0
+              ? options.fn(this)
+              : options.inverse(this);
+          default:
+            return options.inverse(this);
+        }
+      },
+    },
+  });
+});
 app.use("/vendor", vendorrouter);
 app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);
