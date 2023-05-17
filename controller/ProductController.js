@@ -1,10 +1,26 @@
 const Product = require("../model/Product");
 const Joi = require("joi");
 const fs = require("fs");
-const DistributionHub = require("../model/DistributionHub")
+const DistributionHub = require("../model/DistributionHub");
+const { findByIdAndDelete } = require("../model/Vendor");
 
 const getCreateProduct = async (req, res, next) => {
-  return res.render("add_product");
+  if (req.session.user) {
+    return res.render("add_product");
+  }
+  return res.redirect("/login");
+};
+const getUpdateProduct = async (req, res, next) => {
+  try {
+    if (req.session.user) {
+      const data = await Product.findById(req.params.id).lean()
+      return res.render("edit_product",{data});
+    }
+    return res.redirect("/login");
+
+  } catch (error) {
+
+  }
 };
 const createProduct = async (req, res, next) => {
   const files = req.file;
@@ -41,7 +57,7 @@ const createProduct = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("/");
+        res.redirect("/vendor/list_product");
       }
     );
   } catch (error) {
@@ -114,4 +130,18 @@ const findByProduct = async (req, res, next) => {
     // next(error);
   }
 };
-module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct };
+const deleteProduct = async (req,res,next)=>{
+  try {
+      const productOld = await findByIdAndDelete(req.body.id)
+      if(productOld){
+        return res.json({message:"thanh cong",ok:true})
+      }
+      else{
+        return res.json({message:"KHong tim thay id de xoa",ok:false})
+      }
+  } catch (error) {
+      console.log(error)
+      next(error)
+  }
+}
+module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct, getUpdateProduct,deleteProduct };

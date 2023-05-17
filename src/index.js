@@ -124,12 +124,12 @@ app.get("/info", async (req, res) => {
         // console.log(req.user)
         const customer = await Customer.findById(req.session.user.id).lean();
         if (customer) {
-          return res.render("vendor_info", { customer });
+          return res.render("customer_info", { customer });
         }
       } catch (error) {
         console.log(error);
         const message = "Internal server error";
-        return res.render("vendor_info", { message });
+        return res.render("customer_info", { message });
       }
     }
   } else {
@@ -191,6 +191,7 @@ app.post("/login", async (req, res) => {
         });
       } else {
         const message = "Invalid username or password";
+        console.log(message)
         return res.render("login", { message });
       }
     } catch (error) {
@@ -214,7 +215,7 @@ app.post("/login", async (req, res) => {
             // console.error(err);
             return res.status(500).send("Internal server error");
           }
-          res.redirect("/");
+          res.redirect("/vendor/list_product");
         });
       } else {
         const message = "Invalid username or password";

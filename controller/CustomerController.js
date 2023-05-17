@@ -67,7 +67,7 @@ const register = async (req, res, next) => {
         message: "Customer account created successfully",
       },
       (err) => {
-        res.redirect("/customer/login");
+        res.redirect("/login");
       }
     );
   } catch (error) {
@@ -119,4 +119,35 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
     res.redirect("/login");
   });
 });
-module.exports = { register, Login, getHome, Logout };
+const updateProfile = expressAsyncHandler(async (req, res, next) => {
+  const files = req.file;
+
+  try {
+    const { name, address } = req.body;
+    const customer = await Customer.findById(req.session.user.id);
+    if (customer) {
+      // Update the profile picture
+      if (files) {
+        let img = fs.readFileSync(req.file.path);
+        const encode_image = img.toString("base64");
+        customer.filename = files.originalname;
+        customer.contentType = files.mimetype;
+        customer.imageBase64 = encode_image;
+      }
+      customer.name = name
+      customer.address = address
+      await customer.save();
+      req.session.message = "Profile picture updated successfully";
+      req.session.messageType = "success";
+      return res.redirect("/info");
+    } else {
+      return res.render("customer_info", { message: "customer not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    req.session.message = "Internal server error";
+    req.session.messageType = "error";
+    return res.redirect("/info");
+  }
+});
+module.exports = { register, Login, getHome, Logout, updateProfile };

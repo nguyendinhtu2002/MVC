@@ -14,7 +14,36 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   {{!-- <title>Document</title> --}}
   <script src="/js/script.js"></script>
+  <style>
+    @media only screen and (max-width: 767px) {
+      table td:nth-of-type(1)::before {
+        content: "ID";
+        margin: 0;
+        margin-bottom: 5px;
+        margin-right: 50px;
+      }
 
+      table td:nth-of-type(2)::before {
+        content: "Image";
+      }
+
+      table td:nth-of-type(3)::before {
+        content: "Name";
+      }
+
+      table td:nth-of-type(4)::before {
+        content: "Price";
+      }
+
+      table td:nth-of-type(5)::before {
+        content: "Quantity";
+      }
+
+      table td:nth-of-type(6)::before {
+        content: "Action";
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -47,7 +76,7 @@
             <input type="text" id="search" name="query" placeholder="search something here">
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
-          
+
         </div>
         <div class="icons">
           <a href="/products/orders"><i class="fa fa-shopping-cart"></i></a>

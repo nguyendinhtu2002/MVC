@@ -1,0 +1,85 @@
+<main>
+    <div class="container-fluid" style="padding: 0;">
+        <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+            <div class="text-white text-center display-1">Edit product</div>
+        </div>
+    </div>
+
+    <div class="container" style="display:block;">
+        <div class="white-div align-items-center">
+            <div class="row">
+
+                <div class="col">
+                    <h3>Product image</h3>
+                    <div class="">
+                        <img id="preview-image"  src="data:{{data.contentType}};base64,{{data.imageBase64}}" alt="Preview Image"
+                            style="max-width: 50%; height: auto;">
+                    </div>
+                    <form>
+                        <div class="form-group m-2">
+                            <input type="file" class="form-control" id="input-image" name="profilePicture"
+                                placeholder="avatar">
+                        </div>
+                        <div class="form-group m-2">
+                            <h3>Product Name</h3>
+                            <input type="text" class="form-control" id="input-name" name="product-name" name="name" value="{{data.name}}" placeholder=""
+                                required>
+                        </div>
+                        <div class="form-group m-2">
+                            <h3>Product description</h3>
+                            <textarea type="text" class="form-control" name="" id="" cols="30" rows="5" value="{{data.description}}"
+                                required></textarea>
+                        </div>
+
+                        <div class="row m-0">
+                            <div class="col-md-6 mb-4">
+                                <input type="text" class="form-control" id="input-name" name="product-name" value="{{data.price}}"
+                                    placeholder="price" required>
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="d-flex justify-content-center align-items-center">
+                            <button style="width:70%; background-color:#DE4F11; color: white;" type="submit"
+                                class="btn rounded-pill">EDIT</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const imageInput = document.getElementById("input-image");
+        const imagePreview = document.getElementById("preview-image");
+
+        imageInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = "#";
+            }
+        });
+    </script>
+    <style>
+        .white-div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+
+</main>

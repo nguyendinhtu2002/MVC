@@ -7,15 +7,12 @@ const shipperSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      match: /^[a-zA-Z0-9]+$/,
       minlength: 8,
       maxlength: 15,
     },
     password: {
       type: String,
       required: true,
-      match:
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/,
     },
     filename: {
       type: String,

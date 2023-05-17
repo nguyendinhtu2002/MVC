@@ -69,7 +69,7 @@ const register = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        return res.render("login_succes");
+        return res.redirect("/login");
       }
     );
   } catch (error) {
@@ -166,14 +166,13 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
       // Update the profile picture
       let img = fs.readFileSync(req.file.path);
       const encode_image = img.toString("base64");
-
       shipper.filename = files.originalname;
       shipper.contentType = files.mimetype;
       shipper.imageBase64 = encode_image;
       if (hub !== "") {
         shipper.distributionHub = hub;
       }
-      
+
       await shipper.save();
       req.session.message = "Profile picture updated successfully";
       req.session.messageType = "success";
@@ -188,4 +187,4 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
     return res.redirect("/info");
   }
 });
-module.exports = { register, Login, getHome, Logout, getAll, getbyId,updateProfile };
+module.exports = { register, Login, getHome, Logout, getAll, getbyId, updateProfile };

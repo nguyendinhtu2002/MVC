@@ -1,9 +1,6 @@
 const Vendor = require("../model/Vendor");
 const Joi = require("joi");
 const expressAsyncHandler = require("express-async-handler");
-const { generateToken, refreshToken } = require("../utils/generateToken");
-const jwt_decode = require("jwt-decode");
-const fs = require("fs");
 
 const getRegister = (req, res) => {
   if (req.session.user) {
@@ -101,35 +98,6 @@ const register = async (req, res, next) => {
     });
   }
 };
-const Login = expressAsyncHandler(async (req, res, next) => {
-  try {
-    const { username, password } = req.body;
-    const vendor = await Vendor.findOne({ username });
-    if (vendor && (await vendor.matchPassword(password))) {
-      req.session.user = {
-        id: vendor._id,
-        type: "Vendor",
-      };
-      req.session.isLoggedInVendor = true;
-      const message = "Success";
-
-      return res.render("login", { message }, (err, html) => {
-        if (err) {
-          // console.error(err);
-          return res.status(500).send("Internal server error");
-        }
-        res.redirect("/");
-      });
-    } else {
-      const message = "Invalid username or password";
-      return res.render("login", { message });
-    }
-  } catch (error) {
-    const message = "Internal server error";
-    return res.render("login", { message });
-  }
-});
-
 
 const Logout = expressAsyncHandler(async (req, res, next) => {
   req.session.destroy((err) => {
@@ -183,7 +151,6 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
 
 module.exports = {
   register,
-  Login,
   getRegister,
   getHome,
   Logout,
