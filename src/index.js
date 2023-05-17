@@ -72,7 +72,16 @@ app.engine("handlebars", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", "./src/resources/views");
 app.use(express.static(path.join(__dirname, "../public")));
+const checkLoggedIn = (req, res, next) => {
+  if (req.session.user) {
+    res.locals.loggedIn = true;
+  } else {
+    res.locals.loggedIn = false;
+  }
+  next();
+};
 
+app.use(checkLoggedIn);
 app.get("/", async (req, res) => {
   const products = await Product.find({}).lean();
   return res.render("homeCustomer", {
@@ -112,7 +121,20 @@ app.get("/info", async (req, res) => {
         const data = await DistributionHub.find({}).lean();
         const shipper = await Shipper.findById(req.session.user.id).lean();
         if (shipper) {
-          return res.render("shipper_info", { shipper, data });
+          return res.render("shipper_info", {
+            shipper,
+            data,
+            selectedHub: shipper.distributionHub,
+            helpers: {
+              isEqualObjectId: function (v1, v2) {
+                return v1.toString() === v2.toString();
+              },
+              typeof:function(value){
+                return typeof value;
+
+              }
+            },
+          });
         }
       } catch (error) {
         console.log(error);
@@ -133,7 +155,7 @@ app.get("/info", async (req, res) => {
       }
     }
   } else {
-    return res.render("404");
+    return res.redirect("/login");
   }
 });
 app.get("/login", (req, res) => {
@@ -254,6 +276,7 @@ app.get("/product", async (req, res) => {
     },
   });
 });
+
 app.use("/vendor", vendorrouter);
 app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);
