@@ -1,0 +1,114 @@
+<main>
+    <div class="container-fluid" style="padding: 0;">
+        <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+            <div class="text-white text-center display-1">Order</div>
+        </div>
+    </div>
+    <div style="background-color: #8D8C8C;">
+        <input type="checkbox" id="check1" name="check1">
+        <!-- <nav class="container nav1">
+                <ul>
+                    <li><a href="customer_page.html">Home</a></li>
+                    <li><a href="#">Product</a></li>
+                    <li><a href="#">Service</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </nav> -->
+        <!-- <label for="check1" class="checkbtn1">
+                <i class="fa fa-bars"></i>
+                <span class="category-text">CATEGORIES</span>
+            </label> -->
+    </div>
+    <div class="container path">
+        <a class="logo" href="customer_page.html">
+            <b>SIMPLE</b>
+        </a>
+        <a class="pathlast">
+            Product detail
+        </a>
+        <a class="pathlast">
+            Product detail
+        </a>
+    </div>
+    <div class="container path">
+        <p class="logo">
+            Customer: {{data.nameUser}}
+        </p>
+        
+    </div>
+    <div class="container path">
+        <p class="logo">
+            Shipping address: {{data.addressShip}}
+        </p>
+    </div>
+    <div class="container tbheader">
+        <div class="header1">Product </div>
+        <div>Unit Price</div>
+        <div>Quantity</div>
+        <div></div>
+    </div>
+
+    <table class="container cart">
+        <tbody>
+            {{#each data.cart}}
+            <tr>
+                <td class="imgproduct">
+
+                    <span>{{this.name}}</span>
+                </td>
+                <td class="price">{{this.price}}$</td>
+                <td class="quantity">
+                    <span>{{this.quantity}}</span>
+                </td>
+                <td class="btndel">
+                    <form>
+
+                        <button class="remove-button"
+                            onclick="removeProduct('{{../data._id}}', '{{this.id}}', {{this.price}}, {{this.quantity}})"><i
+                                class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <!-- <div class="container DueForOder"><strong class="FinalTotal"><strong>Total amount due for the order </strong>   </div> -->
+
+    <div class="container btncheckout">
+        <div></div>
+        <div class="checkout">
+            <a href="/shipper/getall/test">Back</a>
+        </div>
+        <!-- <div class="back">
+                <a href="#">Continue Shopping</a>
+            </div> -->
+    </div>
+    <script>
+        function removeProduct(orderId, productId, price, quantity) {
+            const data = {
+                orderId: orderId,
+                productId: productId,
+                price: price,
+                quantity: quantity
+            };
+
+            // Gửi request POST đến API
+            fetch('/api/deleteCart', {
+                method: 'Delete',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(result => {
+                    // Xử lý kết quả từ server (nếu cần)
+                    console.log(result);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+
+</main>

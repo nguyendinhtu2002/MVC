@@ -1,0 +1,67 @@
+<main>
+    <div style="background-color: #8D8C8C;">
+        <input type="checkbox" id="check1" name="check1">
+        <nav class="container nav1">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Product</a></li>
+                <li><a href="#">Service</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </nav>
+        <label for="check1" class="checkbtn1">
+            <i class="fa fa-bars"></i>
+            <span class="category-text">CATEGORIES</span>
+        </label>
+    </div>
+
+    <!-- collection -->
+
+
+    <!-- Trending Categories -->
+
+
+    <!-- Flash Sale -->
+
+
+    <!-- Simple Mall -->
+
+
+
+    <!-- Daily Discover -->
+    <div class="dailyDiscover container">
+        <div class="daily">
+            <h2 class=" mb-2">Search result</h2>
+        </div>
+        {{!-- <div class="daily-discover row">
+            <div class="col-lg-2 mt-4">
+                <div class="card">
+                    <img src="image/daily1.webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Tufted Cushion Cover</h5>
+                        <p class="card-text">$9.00</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div> --}}
+        <div class="daily-discover row" id="search-results">
+            {{#each products}}
+            {{#ifCond @index "%" 7}}
+        </div>
+        <div class="col-lg-2 col-md-4">
+            {{/ifCond}}
+            <div class="card">
+                <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <a href="/products/{{this._id}}">
+                        <h5 class="card-title">{{this.name}}</h5>
+                    </a>
+                    <p class="card-text">${{this.price}}</p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</main>

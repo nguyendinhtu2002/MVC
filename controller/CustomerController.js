@@ -150,4 +150,18 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
     return res.redirect("/info");
   }
 });
-module.exports = { register, Login, getHome, Logout, updateProfile };
+const getAddress = expressAsyncHandler(async (req, res, next) => {
+  try {
+    const getaddress = await Customer.findById(req.session.user.id)
+    if (getaddress) {
+      const { _id, address,name } = getaddress;
+      const newObj = { _id, address,name };
+
+      return res.json(newObj)
+    }
+
+  } catch (error) {
+    next(error)
+  }
+})
+module.exports = { register, Login, getHome, Logout, updateProfile, getAddress };

@@ -1,161 +1,155 @@
-{{!-- <p>
-    {{message}}
-</p>
-<h1>Orders</h1>
-<ul>
-    {{#each data}}
-    <li>
-        <h2>Order {{@index}}</h2>
-        <p>Total: {{this.total}}</p>
-        <p>Created at: {{this.createdAt}}</p>
-        <p>Distribution hub: {{this.distributionHub}}</p>
+<style>
+    @media only screen and (max-width: 767px) {
+        table td:nth-of-type(1)::before {
+            content: "Order ID";
+            margin: 0;
+            margin-bottom: 5px;
+            margin-right: 50px;
+        }
 
-        <ul>
-            {{#each this.cart}}
-            <li>
-                <p>Product {{@index}}</p>
-                <p>ID: {{this.id}}</p>
-                <p>Price: {{this.price}}</p>
-                <p>Count: {{this.count}}</p>
-            </li>
-            {{/each}}
-        </ul>
-    </li>
-    {{/each}}
-</ul> --}}
+        table td:nth-of-type(2)::before {
+            content: "Shipping Adress";
+        }
 
+        table td:nth-of-type(3)::before {
+            content: "Customer";
+        }
+
+        table td:nth-of-type(4)::before {
+            content: "Date";
+        }
+
+        table td:nth-of-type(5)::before {
+            content: "Amount";
+        }
+
+        table td:nth-of-type(6)::before {
+            content: "Unit Price";
+        }
+
+        table td:nth-of-type(7)::before {
+            content: "Hub";
+        }
+
+        table td:nth-of-type(8)::before {
+            content: "Delivery";
+        }
+
+        table td:nth-of-type(9)::before {
+            content: "Status";
+        }
+    }
+</style>
 <main>
+
+    <div class="container-fluid" style="padding: 0;">
+        <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+            <div class="text-white text-center display-1">Order</div>
+        </div>
+    </div>
+
     <div style="background-color: #8D8C8C;">
         <input type="checkbox" id="check1" name="check1">
-        <nav class="container nav1">
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="#">Product</a></li>
-                <li><a href="#">Service</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
-        </nav>
+        <!-- <nav class="container nav1">
+          <ul>
+              <li style="background-color: #DE4F11;"><a href="#">Order</a></li>
+              <li><a href="#">Product</a></li>
+              <li><a href="#">Service</a></li>
+              <li><a href="#">Contact Us</a></li>
+          </ul>
+      </nav> -->
         <label for="check1" class="checkbtn1">
             <i class="fa fa-bars"></i>
             <span class="category-text">CATEGORIES</span>
         </label>
     </div>
-    <div class="container path">
-        <a class="logo" href="customer_page.html">
-            <b>SIMPLE</b>
-        </a>
-        <a class="pathlast" href="#">
-            Shopping Cart
-        </a>
-    </div>
 
-    <table class="container cart">
-        <thead>
-            <tr>
-                <th class="header1">Product</th>
-                <th>Unit Price</th>
-                <th>Quantity</th>
-                <th>Total price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="imgproduct" data-id="product1">
-                    <img src="image/daily7.webp" alt="product image">
-                    <span>Guantes de Trabajo Palm Coated</span>
-                </td>
-                <td>$0.77</td>
-                <td>
-                    <button>-</button>
-                    <span>1</span>
-                    <button>+</button>
-                </td>
-                <td>$50</td>
-                <td class="btndel"><button><i class="fa fa-trash"></i></button></td>
-            </tr>
-            <tr>
-                <td class="imgproduct" data-id="product2">
-                    <img src="image/daily6.webp" alt="product image">
-                    <span>550 series I/P converter</span>
-                </td>
-                <td>$150.00</td>
-                <td>
-                    <button>-</button>
-                    <span>2</span>
-                    <button>+</button>
-                </td>
-                <td>$60</td>
-                <td class="btndel"><button><i class="fa fa-trash"></i></button></td>
-            </tr>
-            <tr>
-                <td class="imgproduct" data-id="product3">
-                    <img src="image/daily10.webp" alt="product image">
-                    <span>Best quality customized cup</span>
-                </td>
-                <td>$10.00</td>
-                <td>
-                    <button>-</button>
-                    <span>3</span>
-                    <button>+</button>
-                </td>
-                <td>$60</td>
-                <td class="btndel"><button><i class="fa fa-trash"></i></button></td>
-            </tr>
-            <tr>
-                <td class="imgproduct" data-id="product4">
-                    <img src="image/daily9.webp" alt="product image">
-                    <span>Automatic Open Gift Umbrella</span>
-                </td>
-                <td>$4.23</td>
-                <td>
-                    <button>-</button>
-                    <span>3</span>
-                    <button>+</button>
-                </td>
-                <td>$60</td>
-                <td class="btndel"><button><i class="fa fa-trash"></i></button></td>
-            </tr>
-            <tr>
-                <td class="imgproduct" data-id="product5">
-                    <img src="image/daily4.webp" alt="product image">
-                    <span>Hanging Basket Flower Pot</span>
-                </td>
-                <td>$1.91</td>
-                <td>
-                    <button>-</button>
-                    <span>3</span>
-                    <button>+</button>
-                </td>
-                <td>$60</td>
-                <td class="btndel"><button><i class="fa fa-trash"></i></button></td>
-            </tr>
-            <tr class="voucher">
-                <td> </td>
-                <td> <img src="image/voucher.png" alt=""> <b>Platform Voucher</b></td>
-                <td></td>
-                <td></td>
-                <td> <a href="#">Select or Enter code</a></td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr class="final">
-                <td colspan="4" class="FinalTotal"><strong>Total amount due for the order </strong></td>
-                <td>$170</td>
-                <td></td>
-            </tr>
-        </tfoot>
+    <div class="container-fluid" style="margin-top: 50px; display:block; padding: 0;">
+        <div class="white-div align-items-center" style="padding: 0;">
+            <div class="row">
 
-    </table>
+                <div class="col">
+                    <table class="table">
+                        <thead style="background-color: #F6460E;">
+                            <tr style="color: white;">
+                                <th>Order ID</th>
+                                <th>Shipping Adress</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Unit Price</th>
+                                <th>Hub</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each data}}
+                            <tr>
+                                <td>{{@index}}</td>
+                                <td>{{this.addressShip}}</td>
+                                <td>{{this.nameUser}}</td>
+                                <td>{{formatDate this.createdAt}}</td>
+                                <td>{{this.amount}}</td>
+                                <td>${{this.total}}</td>
+                                <td>{{this.nameHub}}</td>
+                                <td>Pending</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="actionDropdown">
+                                            <li><a href="/shipper/getDetail/{{this._id}}"
+                                                    style="text-decoration: none;"><button
+                                                        class="dropdown-item accept-btn">Detail</button></a></li>
+                                            <li><button class="dropdown-item accept-btn">Delivered</button></li>
+                                            <li><button class="dropdown-item decline-btn">Canceled</button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
 
-    <div class="container btncheckout">
-        <div></div>
-        <div class="checkout">
-            <a href="#">Check out</a>
-        </div>
-        <div class="back">
-            <a href="#">Continue Shopping</a>
+            </div>
         </div>
     </div>
+    <script>
+        const imageInput = document.getElementById("input-image");
+        const imagePreview = document.getElementById("preview-image");
+
+        imageInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = "#";
+            }
+        });
+    </script>
+    </script>
+    <style>
+        .white-div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
 
 </main>

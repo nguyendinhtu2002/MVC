@@ -14,7 +14,7 @@ const getUpdateProduct = async (req, res, next) => {
   try {
     if (req.session.user) {
       const data = await Product.findById(req.params.id).lean()
-      return res.render("edit_product",{data});
+      return res.render("edit_product", { data });
     }
     return res.redirect("/login");
 
@@ -106,10 +106,8 @@ const checkOut = async (req, res, next) => {
 const findByProduct = async (req, res, next) => {
   try {
 
-    // console.log("Alo")
     const products = await Product.find({ name: req.query.query }).lean();
-    // return res.json(products)
-    return res.render("homeCustomer", {
+    return res.render("search", {
       products, helpers: {
         ifCond: function (v1, operator, v2, options) {
           switch (operator) {
@@ -130,18 +128,49 @@ const findByProduct = async (req, res, next) => {
     // next(error);
   }
 };
-const deleteProduct = async (req,res,next)=>{
+const deleteProduct = async (req, res, next) => {
   try {
-      const productOld = await findByIdAndDelete(req.body.id)
-      if(productOld){
-        return res.json({message:"thanh cong",ok:true})
-      }
-      else{
-        return res.json({message:"KHong tim thay id de xoa",ok:false})
-      }
+    const productOld = await Product.findByIdAndDelete(req.body.id)
+    if (productOld) {
+      return res.json({ message: "thanh cong", ok: true })
+    }
+    else {
+      return res.json({ message: "KHong tim thay id de xoa", ok: false })
+    }
   } catch (error) {
-      console.log(error)
-      next(error)
+    console.log(error)
+    next(error)
   }
 }
-module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct, getUpdateProduct,deleteProduct };
+const updateProduct = async (req, res, next) => {
+  const files = req.file;
+  try {
+    const { description, price } = req.body;
+    let product = await Product.findById(req.params.id);
+    if (product) {
+      if (files) {
+        let img = fs.readFileSync(req.file.path);
+        const encode_image = img.toString("base64");
+        product.filename = files.originalname;
+        product.contentType = files.mimetype;
+        product.imageBase64 = encode_image;
+      }
+
+      // Update the properties
+      product.description = description;
+      product.price = price;
+
+      // Save the changes to the database
+      await product.save();
+
+      return res.redirect("/vendor/list_product");
+    } else {
+      return res.render("edit_product", { message: "Product not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.render("edit_product", { message: "Some error occurred" });
+  }
+};
+
+module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct, getUpdateProduct, deleteProduct, updateProduct };

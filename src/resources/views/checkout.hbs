@@ -63,13 +63,24 @@
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const placeOrderButton = document.getElementById("place-order");
     const productsWithoutImages = cart.map(({ id, name, price, quantity }) => ({ id, name, price, quantity }));
+    let address = ""
+    let iduser = ""
+    let nameUser = ""
+    axios.get("/customer/address")
+        .then((response) => {
+            console.log(response.data)
+            address = response.data.address
+            nameUser = response.data.name
+            iduser = response.data._id
+        })
 
     axios.get("/api/dis")
         .then((response) => {
             const selectedOption = response.data;
 
             placeOrderButton.addEventListener("click", () => {
-                axios.post('/api/orders', { cart: productsWithoutImages, distributionHub: selectedOption[0]._id }, {
+                console.log(address)
+                axios.post('/api/orders', { cart: productsWithoutImages, distributionHub: selectedOption[0]._id,nameHub:selectedOption[0].name, iduser: iduser, address: address, name: nameUser }, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

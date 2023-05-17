@@ -15,6 +15,7 @@ const {
   listProduct,
   getUpdateProduct,
   deleteProduct,
+  updateProduct,
 } = require("../controller/ProductController");
 
 const router = express.Router();
@@ -28,5 +29,8 @@ router.get("/create_product", checkAuth, checkVendor, getCreateProduct);
 router.post("/create_product", checkAuth, checkVendor, store.single("profilePicture"), createProduct);
 router.get('/list_product', checkAuth, checkVendor, listProduct)
 router.get("/editProduct/:id", checkAuth, checkVendor, getUpdateProduct)
+router.post("/editProduct/:id", checkAuth, checkVendor,store.single("profilePicture"), updateProduct)
+
 router.delete("/deleteProduct", checkAuth, checkVendor, deleteProduct)
+
 module.exports = router;

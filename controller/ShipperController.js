@@ -3,7 +3,8 @@ const Joi = require("joi");
 const expressAsyncHandler = require("express-async-handler");
 const { generateToken, refreshToken } = require("../utils/generateToken");
 const fs = require("fs");
-const Order = require("../model/Orders")
+const Order = require("../model/Orders");
+const Customer = require("../model/Customer");
 
 
 const register = async (req, res, next) => {
@@ -130,8 +131,16 @@ const getAll = async (req, res, next) => {
   const shipper = await Shipper.findOne({ _id: req.session.user.id }).lean();
   if (shipper) {
     const data = await Order.find({ "distributionHub": shipper.distributionHub }).lean()
+    const nameCustomer = await Customer.findOne({ _id: shipper.idUser }).lean()
     if (data) {
-      return res.render("shipper_order", { data })
+      return res.render("shipper_order", {
+        data, nameCustomer, helpers: {
+          formatDate: function (date) {
+            const formattedDate = new Date(date).toISOString().split("T")[0];
+            return formattedDate;
+          }
+        }
+      })
     }
     else {
       return res.render("shipper_order", { message: "Khong co san pham nao" })
@@ -145,12 +154,12 @@ const getAll = async (req, res, next) => {
 }
 
 const getbyId = async (req, res, next) => {
-  const data = await Order.findById(req.params.id)
+  const data = await Order.findById(req.params.id).lean()
   if (data) {
-    return res.json(data)
+    return res.render("details_order",{data})
   }
   else {
-    return res.json({ message: "Khong co san pham nao" })
+    return res.render("details_order",{message:"Khong tim thay san pham nao "})
   }
 }
 

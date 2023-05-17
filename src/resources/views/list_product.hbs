@@ -58,14 +58,14 @@
               {{#each products}}
               <tr>
                 <td>{{@index}}</td>
-                <td><img src="data:{{this.contentType}};base64,{{this.imageBase64}}" width="10%" height="10%" alt="">
+                <td>
+                  <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" width="10%" height="10%" alt="" >
                 </td>
                 <td class="d-none">
                   <input class="product-id" value="{{this._id}}" type="hidden">
                 </td>
                 <td>{{this.name}}</td>
                 <td>{{this.price}}$</td>
-                {{!-- <td>10</td> --}}
                 <td>
                   <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="actionDropdown"
@@ -73,15 +73,19 @@
                       Actions
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="actionDropdown">
-                      <li><a href="/vendor/editProduct/{{this._id}}"><button
-                            class="dropdown-item accept-btn">Edit</button></a></li>
-                      <li><button class="dropdown-item decline-btn" onclick="deleteProduct(this)">Delete</button></li>
+                      <li>
+                        <a href="/vendor/editProduct/{{this._id}}">
+                          <button class="dropdown-item accept-btn">Edit</button>
+                        </a>
+                      </li>
+                      <li>
+                        <button class="dropdown-item decline-btn" onclick="deleteItem(this)">Delete</button>
+                      </li>
                     </ul>
                   </div>
                 </td>
               </tr>
               {{/each}}
-              <!-- Add more rows as needed -->
             </tbody>
           </table>
         </div>
@@ -92,9 +96,9 @@
   <script>
 
     function deleteItem(button) {
-      var id = button.closest(".dropdown-menu").querySelector(".product-id").value;
+      var id = button.closest("tr").querySelector(".product-id").value;
       fetch("/vendor/deleteProduct", {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json"
         },
@@ -103,6 +107,7 @@
         .then(response => {
           if (response.ok) {
             alert("Sản phẩm đã được xóa thành công!");
+            location.reload();
           } else {
             alert("Đã xảy ra lỗi khi xóa sản phẩm!");
           }
