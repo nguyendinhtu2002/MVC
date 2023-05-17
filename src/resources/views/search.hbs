@@ -46,22 +46,22 @@
 
 
         </div> --}}
-        <div class="daily-discover row" id="search-results">
-            {{#each products}}
-            {{#ifCond @index "%" 7}}
+   <div class="daily-discover row">
+  {{#each products}}
+    <div class="col-lg-2 mt-4">
+      <div class="card">
+          <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
+        <div class="card-body">
+              <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">${{this.price}}</p>
         </div>
-        <div class="col-lg-2 col-md-4">
-            {{/ifCond}}
-            <div class="card">
-                <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <a href="/products/{{this._id}}">
-                        <h5 class="card-title">{{this.name}}</h5>
-                    </a>
-                    <p class="card-text">${{this.price}}</p>
-                </div>
-            </div>
-        </div>
-        {{/each}}
+      </div>
     </div>
+    {{#ifCond @index "%" 6}}
+</div>
+<div class="daily-discover row">
+    {{/ifCond}}
+  {{/each}}
+</div>
+
 </main>

@@ -13,14 +13,11 @@ const getCreateProduct = async (req, res, next) => {
 const getUpdateProduct = async (req, res, next) => {
   try {
     if (req.session.user) {
-      const data = await Product.findById(req.params.id).lean()
+      const data = await Product.findById(req.params.id).lean();
       return res.render("edit_product", { data });
     }
     return res.redirect("/login");
-
-  } catch (error) {
-
-  }
+  } catch (error) {}
 };
 const createProduct = async (req, res, next) => {
   const files = req.file;
@@ -88,38 +85,42 @@ const listAll = async (req, res, next) => {
 };
 
 const getDetailsProduct = async (req, res, next) => {
-
   const product = await Product.findOne({ _id: req.params.id }).lean();
   if (product) {
-    return res.render("details_product", { product })
-  }
-  else {
-    return res.render("details_product", { message: "Khong tim thay san pham" })
+    return res.render("details_product", { product });
+  } else {
+    return res.render("details_product", {
+      message: "Khong tim thay san pham",
+    });
   }
 };
 
 const checkOut = async (req, res, next) => {
   const data = await DistributionHub.find({}).lean();
-  return res.render("checkout", { data })
-}
+  return res.render("checkout", { data });
+};
 
 const findByProduct = async (req, res, next) => {
   try {
-
-    const products = await Product.find({ name: req.query.query }).lean();
+    const query = req.query.query;
+    const regex = new RegExp(query, "i");
+    const products = await Product.find({ name: { $regex: regex } }).lean();
     return res.render("search", {
-      products, helpers: {
+      products,
+      helpers: {
         ifCond: function (v1, operator, v2, options) {
           switch (operator) {
-            case '==':
-              return (v1 % v2 == 0) ? options.fn(this) : options.inverse(this);
-            case '%':
-              return ((v1 + 1) % v2 == 0) ? options.fn(this) : options.inverse(this);
+            case "==":
+              return v1 % v2 == 0 ? options.fn(this) : options.inverse(this);
+            case "%":
+              return (v1 + 1) % v2 == 0
+                ? options.fn(this)
+                : options.inverse(this);
             default:
               return options.inverse(this);
           }
-        }
-      }
+        },
+      },
     });
   } catch (error) {
     // console.log(error)
@@ -130,18 +131,17 @@ const findByProduct = async (req, res, next) => {
 };
 const deleteProduct = async (req, res, next) => {
   try {
-    const productOld = await Product.findByIdAndDelete(req.body.id)
+    const productOld = await Product.findByIdAndDelete(req.body.id);
     if (productOld) {
-      return res.json({ message: "thanh cong", ok: true })
-    }
-    else {
-      return res.json({ message: "KHong tim thay id de xoa", ok: false })
+      return res.json({ message: "thanh cong", ok: true });
+    } else {
+      return res.json({ message: "KHong tim thay id de xoa", ok: false });
     }
   } catch (error) {
-    console.log(error)
-    next(error)
+    console.log(error);
+    next(error);
   }
-}
+};
 const updateProduct = async (req, res, next) => {
   const files = req.file;
   try {
@@ -173,4 +173,15 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { createProduct, getCreateProduct, listProduct, listAll, getDetailsProduct, checkOut, findByProduct, getUpdateProduct, deleteProduct, updateProduct };
+module.exports = {
+  createProduct,
+  getCreateProduct,
+  listProduct,
+  listAll,
+  getDetailsProduct,
+  checkOut,
+  findByProduct,
+  getUpdateProduct,
+  deleteProduct,
+  updateProduct,
+};

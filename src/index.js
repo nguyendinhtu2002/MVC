@@ -187,7 +187,7 @@ app.post("/login", async (req, res) => {
             // console.error(err);
             return res.status(500).send("Internal server error");
           }
-          res.redirect("/");
+          res.redirect("/shipper/getall/order");
         });
       } else {
         const message = "Invalid username or password";

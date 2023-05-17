@@ -3,7 +3,6 @@ const Order = require("../model/Orders")
 
 const createOrder = async (req, res) => {
     const { cart, distributionHub, address, iduser, name, nameHub } = req.body;
-    console.log(req.body)
 
     try {
         const total = cart.reduce((acc, product) => acc + product.price * product.quantity, 0);

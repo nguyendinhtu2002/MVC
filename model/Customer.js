@@ -17,7 +17,6 @@ const customerSchema = new mongoose.Schema(
     },
     filename: {
       type: String,
-      unique: true,
       required: true,
     },
     contentType: {

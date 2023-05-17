@@ -68,7 +68,6 @@
     let nameUser = ""
     axios.get("/customer/address")
         .then((response) => {
-            console.log(response.data)
             address = response.data.address
             nameUser = response.data.name
             iduser = response.data._id
@@ -79,7 +78,6 @@
             const selectedOption = response.data;
 
             placeOrderButton.addEventListener("click", () => {
-                console.log(address)
                 axios.post('/api/orders', { cart: productsWithoutImages, distributionHub: selectedOption[0]._id,nameHub:selectedOption[0].name, iduser: iduser, address: address, name: nameUser }, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -88,14 +86,15 @@
                     .then(function (response) {
                         alert("Order placed successfully!");
                         localStorage.removeItem("cart");
-                        console.log(response);
                     })
                     .catch(function (error) {
-                        console.log(error);
+                        console.log(error)
+                        alert(error.response.data.message);
+                        location.href ="/login"
                     });
             });
         })
         .catch((error) => {
-            console.log(error)
+            alert(error)
         });
 </script>

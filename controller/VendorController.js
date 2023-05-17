@@ -1,6 +1,7 @@
 const Vendor = require("../model/Vendor");
 const Joi = require("joi");
 const expressAsyncHandler = require("express-async-handler");
+const fs = require("fs");
 
 const getRegister = (req, res) => {
   if (req.session.user) {
@@ -88,7 +89,7 @@ const register = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("/login");
+        res.redirect("register_succes");
       }
     );
   } catch (error) {

@@ -53,17 +53,14 @@
       count: 1
     };
 
-    // Add event listener to the Add to Cart button
     const addToCartButton = document.getElementById("add-to-cart");
     addToCartButton.addEventListener("click", () => {
       let cart = JSON.parse(localStorage.getItem("cart")) || [];
       const existingProductIndex = cart.findIndex((item) => item.id === product.id);
 
       if (existingProductIndex !== -1) {
-        // Sản phẩm đã có trong giỏ hàng
         cart[existingProductIndex].count++;
       } else {
-        // Sản phẩm chưa có trong giỏ hàng
         cart.push(product);
       }
 

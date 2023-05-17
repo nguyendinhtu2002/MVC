@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
 });
 router.post("/logout", Logout);
 
-router.get("/getALL/test", checkAuth, checkShipper, getAll);
+router.get("/getall/order", checkAuth, checkShipper, getAll);
 router.post("/change_profile", store.single("profilePicture"), updateProfile);
 
 router.get("/getDetail/:id", checkAuth, checkShipper, getbyId);

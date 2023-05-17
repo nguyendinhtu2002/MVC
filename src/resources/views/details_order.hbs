@@ -92,7 +92,6 @@
                 quantity: quantity
             };
 
-            // Gửi request POST đến API
             fetch('/api/deleteCart', {
                 method: 'Delete',
                 headers: {
@@ -102,7 +101,6 @@
             })
                 .then(response => response.json())
                 .then(result => {
-                    // Xử lý kết quả từ server (nếu cần)
                     console.log(result);
                 })
                 .catch(error => {

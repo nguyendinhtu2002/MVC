@@ -67,7 +67,7 @@ const register = async (req, res, next) => {
         message: "Customer account created successfully",
       },
       (err) => {
-        res.redirect("/login");
+        res.render("register_succes");
       }
     );
   } catch (error) {

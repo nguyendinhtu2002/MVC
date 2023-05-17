@@ -8,6 +8,13 @@ const checkAuth = (req, res, next) => {
 
   next();
 };
+const checkAuthAPI = (req, res, next) => {
+  if (!req.session.user) {
+    return res.status(401).json({message:"Chua login"});
+  }
+
+  next();
+};
 const checkVendor = (req, res, next) => {
   // Nếu session không tồn tại user hoặc user không phải là vendor, chuyển hướng người dùng về trang đăng nhập
   if (!req.session.user || req.session.user.type !== "Vendor") {
@@ -37,5 +44,6 @@ module.exports = {
   checkAuth,
   checkVendor,
   checkShipper,
-  checkCustomer
+  checkCustomer,
+  checkAuthAPI
 };
