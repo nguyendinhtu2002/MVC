@@ -227,6 +227,9 @@ app.post("/login", async (req, res) => {
     }
   }
 });
+app.get("/service",(req,res)=>{
+  return res.render("home_service")
+})
 app.use("/vendor", vendorrouter);
 app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);
