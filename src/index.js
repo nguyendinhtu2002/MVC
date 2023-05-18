@@ -95,10 +95,10 @@ app.get("/", async (req, res) => {
   const products = await Product.find({}).lean();
   if (req.session.user) {
     if (req.session.user.type === "Shipper") {
-      return res.render("shipper_order")
+      return res.render("/shipper/getall/test")
     }
     else if (req.session.user.type === "Vendor") {
-      return res.render("list_product")
+      return res.redirect("/vendor/list_product")
     }
     else {
       return res.render("homeCustomer", {

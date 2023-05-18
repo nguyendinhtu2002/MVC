@@ -4,7 +4,7 @@
         <nav class="container nav1">
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="#">Product</a></li>
+                <li><a href="/product">Product</a></li>
                 <li><a href="/service">Service</a></li>
                 <li><a href="/contact">Contact Us</a></li>
             </ul>
@@ -46,22 +46,24 @@
 
 
         </div> --}}
-   <div class="daily-discover row"  style="width: 100%;">
-  {{#each products}}
-    <div class="col-lg-2 mt-4">
-      <div class="card">
-          <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
-        <div class="card-body">
-              <h5 class="card-title">{{this.name}}</h5>
-            <p class="card-text">${{this.price}}</p>
+        <div class="daily-discover row" style="width: 100%;">
+            {{#each products}}
+            <div class="col-lg-2 mt-4">
+                <div class="card">
+                    <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <a href="/products/{{this._id}}">
+                            <h5 class="card-title">{{this.name}}</h5>
+                        </a>
+                        <p class="card-text">${{this.price}}</p>
+                    </div>
+                </div>
+            </div>
+            {{#ifCond @index "%" 6}}
         </div>
-      </div>
-    </div>
-    {{#ifCond @index "%" 6}}
-</div>
-<div class="daily-discover row" style="width: 100%;">
-    {{/ifCond}}
-  {{/each}}
-</div>
+        <div class="daily-discover row" style="width: 100%;">
+            {{/ifCond}}
+            {{/each}}
+        </div>
 
 </main>

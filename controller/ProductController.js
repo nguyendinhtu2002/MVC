@@ -14,11 +14,10 @@ const getUpdateProduct = async (req, res, next) => {
   try {
     if (req.session.user) {
       const data = await Product.findById(req.params.id).lean();
-      console.log(data)
       return res.render("edit_product", { data });
     }
     return res.redirect("/login");
-  } catch (error) {}
+  } catch (error) { }
 };
 const createProduct = async (req, res, next) => {
   const files = req.file;
@@ -146,7 +145,7 @@ const deleteProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   const files = req.file;
   try {
-    const { description, price } = req.body;
+    const { description, price, name } = req.body;
     let product = await Product.findById(req.params.id);
     if (product) {
       if (files) {
@@ -158,6 +157,7 @@ const updateProduct = async (req, res, next) => {
       }
 
       // Update the properties
+      product.name = name;
       product.description = description;
       product.price = price;
 

@@ -187,7 +187,6 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
       req.session.messageType = "success";
       return res.redirect("/info");
     } else {
-      console.log("Loi")
       return res.render("shipper_info", { message: "Shipper not found" });
     }
   } catch (error) {
