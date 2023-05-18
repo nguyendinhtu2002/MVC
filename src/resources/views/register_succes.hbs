@@ -1,83 +1,82 @@
-
-
-
-  <main>
-    <div class="container-fluid" style="padding: 0;">
-      <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
-        <div class="text-white text-center display-1">Create Account</div>
-      </div>
+<main>
+  <div class="container-fluid" style="padding: 0;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+      <div class="text-white text-center display-1">Create Account</div>
     </div>
+  </div>
 
-    <div class="container">
-      <div class="white-div d-flex align-items-center justify-content-center">
-        <div class="row">
-          
-          <div class="col">
-            <h3 class="">THANKS FOR YOUR ATTENTION TO OUR PLATFORM. WE HOPE YOU ENJOY AND DO YOUR WORK WELL! CONGRATULATION, WELCOME TO OUR COMPANY!</h3>
+  <div class="container">
+    <div class="white-div d-flex align-items-center justify-content-center">
+      <div class="row">
 
-            <div class="justify-content-center d-flex">
-              <img id="preview-image" src="/image/sign_up_sucess.png" alt="Preview Image" style="max-width: 70%; height: auto; padding: 50px 0 50px 0;">
-            </div>
-    
+        <div class="col">
+          <h3 class="">THANKS FOR YOUR ATTENTION TO OUR PLATFORM. WE HOPE YOU ENJOY AND DO YOUR WORK WELL!
+            CONGRATULATION, WELCOME TO OUR COMPANY!</h3>
+
+          <div class="justify-content-center d-flex">
+            <img id="preview-image" src="/image/sign_up_sucess.png" alt="Preview Image"
+              style="max-width: 70%; height: auto; padding: 50px 0 50px 0;">
           </div>
+
         </div>
       </div>
     </div>
-    <script>
-      const imageInput = document.getElementById("input-image");
-      const imagePreview = document.getElementById("preview-image");
-    
-      imageInput.addEventListener("change", function(event) {
-        const file = event.target.files[0];
-    
-        if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-          };
-    
-          reader.readAsDataURL(file);
-        } else {
-          imagePreview.src = "#";
-        }
-      });
-      
-      // Get references to the password input fields and the message element
-  const passwordInput = document.getElementById('input-password');
-  const password2Input = document.getElementById('input-password2');
-  const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+  </div>
+  <script>
+    const imageInput = document.getElementById("input-image");
+    const imagePreview = document.getElementById("preview-image");
 
-  // Function to check if passwords match
-  function checkPasswordsMatch() {
-    const password = passwordInput.value;
-    const password2 = password2Input.value;
+    imageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
 
-    if (password === password2) {
-      passwordMatchMessage.textContent = 'Passwords match.';
-      passwordMatchMessage.classList.remove('text-danger');
-      passwordMatchMessage.classList.add('text-success');
-    } else {
-      passwordMatchMessage.textContent = 'Passwords do not match.';
-      passwordMatchMessage.classList.remove('text-success');
-      passwordMatchMessage.classList.add('text-danger');
-    }
-  }
+      if (file) {
+        const reader = new FileReader();
 
-  // Add event listener to the second password input field
-  password2Input.addEventListener('input', checkPasswordsMatch);
-</script>
-    </script>
-    <style>
-      .white-div {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = "#";
       }
-    </style>
+    });
+
+    // Get references to the password input fields and the message element
+    const passwordInput = document.getElementById('input-password');
+    const password2Input = document.getElementById('input-password2');
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+
+    // Function to check if passwords match
+    function checkPasswordsMatch() {
+      const password = passwordInput.value;
+      const password2 = password2Input.value;
+
+      if (password === password2) {
+        passwordMatchMessage.textContent = 'Passwords match.';
+        passwordMatchMessage.classList.remove('text-danger');
+        passwordMatchMessage.classList.add('text-success');
+      } else {
+        passwordMatchMessage.textContent = 'Passwords do not match.';
+        passwordMatchMessage.classList.remove('text-success');
+        passwordMatchMessage.classList.add('text-danger');
+      }
+    }
+
+    // Add event listener to the second password input field
+    password2Input.addEventListener('input', checkPasswordsMatch);
+  </script>
+  </script>
+  <style>
+    .white-div {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
 
 
 
-  </main>
+</main>
