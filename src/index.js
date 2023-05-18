@@ -110,6 +110,21 @@ app.get("/", async (req, res) => {
               return options.inverse(this);
           }
         },
+        gt: function (value1, value2) {
+          return value1 > value2;
+        },
+        inc: function (value) {
+          return parseInt(value) + 1;
+        },
+        length: function (array) {
+          if (Array.isArray(array)) {
+            return array.length;
+          }
+          return 0;
+        },
+        eq:function(value1, value2, options) {
+          return value1 === value2 ? options.fn(this) : options.inverse(this);
+        }
       },
     });
 
