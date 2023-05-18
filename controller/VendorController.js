@@ -123,12 +123,13 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
     const vendor = await Vendor.findById(req.session.user.id);
     if (vendor) {
       // Update the profile picture
-      let img = fs.readFileSync(req.file.path);
-      const encode_image = img.toString("base64");
-
-      vendor.filename = files.originalname;
-      vendor.contentType = files.mimetype;
-      vendor.imageBase64 = encode_image;
+      if (files) {
+        let img = fs.readFileSync(req.file.path);
+        const encode_image = img.toString("base64");
+        vendor.filename = files.originalname;
+        vendor.contentType = files.mimetype;
+        vendor.imageBase64 = encode_image;
+      }
       if (business_name !== "") {
         vendor.business_name = business_name;
       }

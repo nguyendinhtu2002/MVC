@@ -1,85 +1,88 @@
- <main>
-    <div class="container-fluid" style="padding: 0;">
-      <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
-        <div class="text-white text-center display-1">My page</div>
-      </div>
+<main>
+  <div class="container-fluid" style="padding: 0;">
+    <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+      <div class="text-white text-center display-1">My page</div>
     </div>
+  </div>
 
-    <div class="container" style="display: block;">
-      <div class="white-div d-flex align-items-center justify-content-center">
-        <div class="row">
-          
-          <div class="col">
-            <div class="justify-content-center d-flex">
-              <img id="preview-image" src="data:{{shipper.contentType}};base64,{{shipper.imageBase64}}" alt="Preview Image" style="max-width: 50%; height: auto;">
+  <div class="container" style="display: block;">
+    <div class="white-div d-flex align-items-center justify-content-center">
+      <div class="row">
+
+        <div class="col">
+          <div class="justify-content-center d-flex">
+            <img id="preview-image" src="data:{{shipper.contentType}};base64,{{shipper.imageBase64}}"
+              alt="Preview Image" style="max-width: 50%; height: auto;">
+          </div>
+          <h3 class="text-center">Your image</h3>
+          <form method="POST" action="/shipper/change_profile" enctype="multipart/form-data">
+            <div class="form-group m-2">
+              <input type="file" class="form-control" id="input-image" name="profilePicture" placeholder="avatar">
             </div>
-            <h3 class="text-center">Your image</h3>
-            <form method="POST" action="/shipper/change_profile" enctype="multipart/form-data">
-              <div class="form-group m-2">
-                <input type="file" class="form-control" id="input-image" name="profilePicture" placeholder="avatar">
-              </div>
-              
-          <div class="form-group m-2">
- <select class="form-control" id="input-hub" name="hub">
-  <option value="">Select Hub</option>
-  {{#each data}}
-    {{#if (isEqualObjectId this._id ../shipper.distributionHub)}}
-      <option value="{{this._id}}" selected>{{this.name}}</option>
-    {{else}}
-      <option value="{{this._id}}">{{this.name}}</option>
-    {{/if}}
-  {{/each}}
-</select>
 
-</div>
-              
-              <div class="d-flex justify-content-center align-items-center">
-                <button style="width:70%; background-color:#DE4F11; color: white;" type="submit" class="btn rounded-pill">Change information</button>
-              </div>
+            <div class="form-group m-2">
+              <select class="form-control" id="input-hub" name="hub">
+                <option value="">Select Hub</option>
+                {{#each data}}
+                {{#if (isEqualObjectId this._id ../shipper.distributionHub)}}
+                <option value="{{this._id}}" selected>{{this.name}}</option>
+                {{else}}
+                <option value="{{this._id}}">{{this.name}}</option>
+                {{/if}}
+                {{/each}}
+              </select>
 
-            </form>
-            <form action="shipper/logout" method="POST">
+            </div>
+
+            <div class="d-flex justify-content-center align-items-center">
+              <button style="width:70%; background-color:#DE4F11; color: white;" type="submit"
+                class="btn rounded-pill">Change information</button>
+            </div>
+
+          </form>
+          <form action="shipper/logout" method="POST">
             <div class="d-flex justify-content-center align-items-center mt-2">
 
-              <button style="width:70%; background-color:#DE4F11; color: white;" type="submit" class="btn rounded-pill">Log out</button>
+              <button style="width:70%; background-color:#DE4F11; color: white;" type="submit"
+                class="btn rounded-pill">Log out</button>
             </div>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-    <script>
-      const imageInput = document.getElementById("input-image");
-      const imagePreview = document.getElementById("preview-image");
-    
-      imageInput.addEventListener("change", function(event) {
-        const file = event.target.files[0];
-    
-        if (file) {
-          const reader = new FileReader();
-    
-          reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-          };
-    
-          reader.readAsDataURL(file);
-        } else {
-          imagePreview.src = "#";
-        }
-      });
-      
-</script>
-    </script>
-    <style>
-      .white-div {
-        background-color: white;
-        padding: 20px;
-        border-radius: 5px;
-        margin-top: 20px;
-        margin-bottom: 20px;
+  </div>
+  <script>
+    const imageInput = document.getElementById("input-image");
+    const imagePreview = document.getElementById("preview-image");
+
+    imageInput.addEventListener("change", function (event) {
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.src = "#";
       }
-    </style>
+    });
+
+  </script>
+  </script>
+  <style>
+    .white-div {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
 
 
 
-  </main>
+</main>

@@ -165,19 +165,19 @@ const getbyId = async (req, res, next) => {
 
 const updateProfile = expressAsyncHandler(async (req, res, next) => {
   const files = req.file;
-  if (!files) {
-    return res.render("shipper_info", { message: "File is missing" });
-  }
+ 
   try {
     const { hub } = req.body;
     const shipper = await Shipper.findById(req.session.user.id);
     if (shipper) {
       // Update the profile picture
-      let img = fs.readFileSync(req.file.path);
-      const encode_image = img.toString("base64");
-      shipper.filename = files.originalname;
-      shipper.contentType = files.mimetype;
-      shipper.imageBase64 = encode_image;
+      if (files) {
+        let img = fs.readFileSync(req.file.path);
+        const encode_image = img.toString("base64");
+        shipper.filename = files.originalname;
+        shipper.contentType = files.mimetype;
+        shipper.imageBase64 = encode_image;
+      }
       if (hub !== "") {
         shipper.distributionHub = hub;
       }
@@ -187,6 +187,7 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
       req.session.messageType = "success";
       return res.redirect("/info");
     } else {
+      console.log("Loi")
       return res.render("shipper_info", { message: "Shipper not found" });
     }
   } catch (error) {
