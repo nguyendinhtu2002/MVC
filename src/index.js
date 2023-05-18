@@ -345,6 +345,9 @@ app.get("/product", async (req, res) => {
   });
 });
 
+app.get("/helper",(req,res)=>{
+   return res.render("helper")
+})
 app.use("/vendor", vendorrouter);
 app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);

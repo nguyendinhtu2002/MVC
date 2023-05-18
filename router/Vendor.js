@@ -6,6 +6,7 @@ const {
   getHome,
   Logout,
   updateProfile,
+  changePassword,
 } = require("../controller/VendorController");
 const store = require("../middlerware/multer");
 const { checkAuth, checkVendor } = require("../middlerware/AuthMiddlerware");
@@ -30,7 +31,7 @@ router.post("/create_product", checkAuth, checkVendor, store.single("profilePict
 router.get('/list_product', checkAuth, checkVendor, listProduct)
 router.get("/editProduct/:id", checkAuth, checkVendor, getUpdateProduct)
 router.post("/editProduct/:id", checkAuth, checkVendor,store.single("profilePicture"), updateProduct)
-
+router.post("/updatePassword",checkAuth,checkVendor,changePassword)
 router.delete("/deleteProduct", checkAuth, checkVendor, deleteProduct)
 
 module.exports = router;

@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Example App</title>
+  <title>Simple</title>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -95,14 +95,14 @@
         </div>
         <div class="icons">
           {{#if Type}}
-          <a href="/products/orders"  class="d-none">
+          <a href="/products/orders" class="d-none">
             <div class="cart-icon">
               <i class="fa fa-shopping-cart"></i>
               <span class="cart-count">0</span>
             </div>
           </a>
           {{else}}
-            <a href="/products/orders">
+          <a href="/products/orders">
             <div class="cart-icon">
               <i class="fa fa-shopping-cart"></i>
               <span class="cart-count">0</span>
@@ -142,22 +142,20 @@
 
   <footer>
     <div class="container pt-4">
-      <div style="display:flex; justify-content: center; text-align: center;">
-        <p>
-          Buy everything you need, even for your kids, it’s all meet your
-          needs
-        </p>
+      <div class="text-center col-12">
+        <p class="mb-0">Buy everything you need, even for your kids, it’s all meet your needs</p>
       </div>
-      <div class="ft-link">
-        <ul>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Copyrights</a></li>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Helps</a></li>
+      <br>
+      <div class="ft-link text-center col-12">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="/contact">About</a></li>
+          <li class="list-inline-item"><a href="#">Copyrights</a></li>
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="/helper">Helps</a></li>
         </ul>
       </div>
-      <div style="display:flex; justify-content: center; text-align: center;">
-        <p>Copyright © 2023 . RMIT University . All Rights Reserved</p>
+      <div class="text-center col-12">
+        <p class="mb-0" style="font-size: 12px;">Copyright © 2023. RMIT University. All Rights Reserved</p>
       </div>
     </div>
   </footer>
