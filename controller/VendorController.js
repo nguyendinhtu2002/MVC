@@ -114,10 +114,7 @@ const Logout = expressAsyncHandler(async (req, res, next) => {
 });
 const updateProfile = expressAsyncHandler(async (req, res, next) => {
   const files = req.file;
-  if (!files) {
-    console.log("File is missing")
-    return res.render("vendor_info", { message: "File is missing" });
-  }
+ 
   try {
     const { business_name, business_address } = req.body;
     const vendor = await Vendor.findById(req.session.user.id);
@@ -133,7 +130,7 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
       if (business_name !== "") {
         vendor.business_name = business_name;
       }
-      if(business_address!==""){
+      if (business_address !== "") {
         vendor.business_address = business_address;
       }
       await vendor.save();

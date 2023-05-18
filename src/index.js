@@ -93,13 +93,47 @@ app.use(checkLoggedIn);
 
 app.get("/", async (req, res) => {
   const products = await Product.find({}).lean();
-
   if (req.session.user) {
     if (req.session.user.type === "Shipper") {
       return res.render("shipper_order")
     }
     else if (req.session.user.type === "Vendor") {
       return res.render("list_product")
+    }
+    else {
+      return res.render("homeCustomer", {
+        products,
+        helpers: {
+          ifCond: function (v1, operator, v2, options) {
+            switch (operator) {
+              case "==":
+                return v1 % v2 == 0 ? options.fn(this) : options.inverse(this);
+              case "%":
+                return (v1 + 1) % v2 == 0
+                  ? options.fn(this)
+                  : options.inverse(this);
+              default:
+                return options.inverse(this);
+            }
+          },
+          gt: function (value1, value2) {
+            return value1 > value2;
+          },
+          inc: function (value) {
+            return parseInt(value) + 1;
+          },
+          length: function (array) {
+            if (Array.isArray(array)) {
+              return array.length;
+            }
+            return 0;
+          },
+          eq: function (value1, value2, options) {
+            return value1 === value2 ? options.fn(this) : options.inverse(this);
+          }
+        },
+      });
+
     }
   }
   else {
@@ -211,11 +245,10 @@ app.post("/login", async (req, res) => {
           type: "Customer",
         };
         req.session.isLoggedInCustomer = true;
-
         const message = "Customer logged in successfully";
         return res.render("login", { message }, (err, html) => {
           if (err) {
-            // console.error(err);
+            console.error(err);
             return res.status(500).send("Internal server error");
           }
           res.redirect("/");
@@ -249,7 +282,6 @@ app.post("/login", async (req, res) => {
         });
       } else {
         const message = "Invalid username or password";
-        console.log(message);
         return res.render("login", { message });
       }
     } catch (error) {

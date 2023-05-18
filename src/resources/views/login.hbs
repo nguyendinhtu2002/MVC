@@ -54,16 +54,14 @@
           reader.readAsDataURL(file);
         } else { imagePreview.src = "#"; }
     }); // Get
-    references to the password input fields and the message element const
-      passwordInput = document.getElementById('input-password'); const
-        password2Input = document.getElementById('input-password2'); const
-          passwordMatchMessage = document.getElementById('passwordMatchMessage'); //
+    const passwordInput = document.getElementById('input-password');
+    const password2Input = document.getElementById('input-password2');
+    const passwordMatchMessage = document.getElementById('passwordMatchMessage');
     Function to check if passwords match function checkPasswordsMatch() {
-      const
-        password = passwordInput.value; const password2 = password2Input.value; if
+      const password = passwordInput.value; const password2 = password2Input.value;
+      if
         (password === password2) {
-        passwordMatchMessage.textContent = 'Passwords
-        match.'; passwordMatchMessage.classList.remove('text - danger');
+        passwordMatchMessage.textContent = 'Passwordsmatch.'; passwordMatchMessage.classList.remove('text - danger');
         passwordMatchMessage.classList.add('text-success');
       } else {
         passwordMatchMessage.textContent = 'Passwords do not match.';
