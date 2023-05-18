@@ -89,7 +89,7 @@ const register = async (req, res, next) => {
         message: "Vendor account created successfully",
       },
       (err) => {
-        res.redirect("register_succes");
+        res.render("register_succes");
       }
     );
   } catch (error) {

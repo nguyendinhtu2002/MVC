@@ -82,25 +82,38 @@ const checkLoggedIn = (req, res, next) => {
 };
 
 app.use(checkLoggedIn);
+
 app.get("/", async (req, res) => {
   const products = await Product.find({}).lean();
-  return res.render("homeCustomer", {
-    products,
-    helpers: {
-      ifCond: function (v1, operator, v2, options) {
-        switch (operator) {
-          case "==":
-            return v1 % v2 == 0 ? options.fn(this) : options.inverse(this);
-          case "%":
-            return (v1 + 1) % v2 == 0
-              ? options.fn(this)
-              : options.inverse(this);
-          default:
-            return options.inverse(this);
-        }
+
+  if (req.session.user) {
+    if (req.session.user.type === "Shipper") {
+      return res.render("shipper_order")
+    }
+    else if (req.session.user.type === "Vendor") {
+      return res.render("list_product")
+    }
+  }
+  else {
+    return res.render("homeCustomer", {
+      products,
+      helpers: {
+        ifCond: function (v1, operator, v2, options) {
+          switch (operator) {
+            case "==":
+              return v1 % v2 == 0 ? options.fn(this) : options.inverse(this);
+            case "%":
+              return (v1 + 1) % v2 == 0
+                ? options.fn(this)
+                : options.inverse(this);
+            default:
+              return options.inverse(this);
+          }
+        },
       },
-    },
-  });
+    });
+
+  }
 });
 app.get("/info", async (req, res) => {
   if (req.session.user) {
@@ -129,7 +142,7 @@ app.get("/info", async (req, res) => {
               isEqualObjectId: function (v1, v2) {
                 return v1.toString() === v2.toString();
               },
-              typeof:function(value){
+              typeof: function (value) {
                 return typeof value;
 
               }

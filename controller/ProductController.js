@@ -14,6 +14,7 @@ const getUpdateProduct = async (req, res, next) => {
   try {
     if (req.session.user) {
       const data = await Product.findById(req.params.id).lean();
+      console.log(data)
       return res.render("edit_product", { data });
     }
     return res.redirect("/login");
