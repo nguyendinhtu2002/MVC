@@ -94,13 +94,22 @@
 
         </div>
         <div class="icons">
-          <a href="/products/orders">
+          {{#if Type}}
+          <a href="/products/orders"  class="d-none">
             <div class="cart-icon">
               <i class="fa fa-shopping-cart"></i>
               <span class="cart-count">0</span>
             </div>
           </a>
-          <a href="#"><i class="fa fa-user"></i></a>
+          {{else}}
+            <a href="/products/orders">
+            <div class="cart-icon">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </div>
+          </a>
+          {{/if}}
+          <a href="/info"><i class="fa fa-user"></i></a>
         </div>
         <a href="#" class="menu-toggle"><i class="fa fa-bars"></i></a>
       </div>

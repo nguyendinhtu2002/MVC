@@ -74,8 +74,16 @@ app.set("views", "./src/resources/views");
 app.use(express.static(path.join(__dirname, "../public")));
 const checkLoggedIn = (req, res, next) => {
   if (req.session.user) {
+    if (req.session.user.type === "Shipper" || req.session.user.type === "Vendor") {
+      res.locals.Type = true;
+    }
+    else {
+      res.locals.Type = false
+    }
     res.locals.loggedIn = true;
   } else {
+
+    res.locals.Type = false
     res.locals.loggedIn = false;
   }
   next();
@@ -122,7 +130,7 @@ app.get("/", async (req, res) => {
           }
           return 0;
         },
-        eq:function(value1, value2, options) {
+        eq: function (value1, value2, options) {
           return value1 === value2 ? options.fn(this) : options.inverse(this);
         }
       },
