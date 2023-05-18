@@ -21,7 +21,6 @@ const Vendor = require("../model/Vendor");
 const Shipper = require("../model/Shipper");
 const Customer = require("../model/Customer");
 const DistributionHub = require("../model/DistributionHub");
-const products = require("../data.json")
 dotenv.config();
 connectDatabase();
 app.use(cookieParser());
@@ -351,11 +350,7 @@ app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);
 app.use("/products", productRouter);
 app.use("/api", ordersRouter);
-app.use("/import", async (req, res) => {
-  await Product.deleteMany({});
-  const importProducts = await Product.insertMany(products);
-  res.send({ importProducts });
-})
+
 app.use("/api/dis", distributionHubRouter);
 app.use(function (req, res, next) {
   res.status(404).render("404", { layout: false });
