@@ -7,6 +7,7 @@ const {
   getAll,
   getbyId,
   updateProfile,
+  updateStatus,
 } = require("../controller/ShipperController");
 const router = express.Router();
 const Shipper = require("../model/Shipper");
@@ -43,6 +44,7 @@ router.post("/logout", Logout);
 
 router.get("/getall/order", checkAuth, checkShipper, getAll);
 router.post("/change_profile", store.single("profilePicture"), updateProfile);
+router.post("/api/updateStatus", updateStatus);
 
 router.get("/getDetail/:id", checkAuth, checkShipper, getbyId);
 module.exports = router;

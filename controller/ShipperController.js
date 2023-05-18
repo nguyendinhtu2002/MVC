@@ -91,7 +91,7 @@ const Login = expressAsyncHandler(async (req, res, next) => {
       };
       req.session.isLoggedInShipper = true;
       const message = "Shipper logged in successfully";
-      return res.render("login_shipper", { message }, (err, html) => {
+      return res.render("login", { message }, (err, html) => {
         if (err) {
           // console.error(err);
           return res.status(500).send("Internal server error");
@@ -100,19 +100,19 @@ const Login = expressAsyncHandler(async (req, res, next) => {
       });
     } else {
       const message = "Invalid username or password";
-      return res.render("login_shipper", { message });
+      return res.render("login", { message });
     }
   } catch (error) {
     console.log(error);
     const message = "Internal server error";
-    return res.render("login_shipper", { message });
+    return res.render("login", { message });
   }
 });
 const getHome = async (req, res) => {
   if (req.session.user) {
     return res.redirect("/");
   }
-  return res.render("login_shipper");
+  return res.render("login");
 };
 const Logout = expressAsyncHandler(async (req, res, next) => {
   req.session.destroy((err) => {
@@ -156,16 +156,16 @@ const getAll = async (req, res, next) => {
 const getbyId = async (req, res, next) => {
   const data = await Order.findById(req.params.id).lean()
   if (data) {
-    return res.render("details_order",{data})
+    return res.render("details_order", { data })
   }
   else {
-    return res.render("details_order",{message:"Khong tim thay san pham nao "})
+    return res.render("details_order", { message: "Khong tim thay san pham nao " })
   }
 }
 
 const updateProfile = expressAsyncHandler(async (req, res, next) => {
   const files = req.file;
- 
+
   try {
     const { hub } = req.body;
     const shipper = await Shipper.findById(req.session.user.id);
@@ -196,4 +196,21 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
     return res.redirect("/info");
   }
 });
-module.exports = { register, Login, getHome, Logout, getAll, getbyId, updateProfile };
+
+const updateStatus = expressAsyncHandler(async (req, res, next) => {
+  try {
+    const foundOrder = await Order.findById(req.body.id);
+    if (foundOrder) {
+      const { status } = req.body;
+      foundOrder.status = status;
+      await foundOrder.save();
+      return res.json({ message: "Thành công rồi" });
+    } else {
+      return res.json({ message: "Không tìm thấy id" });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+module.exports = { register, Login, getHome, Logout, getAll, getbyId, updateProfile, updateStatus };

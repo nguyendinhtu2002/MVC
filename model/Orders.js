@@ -51,6 +51,10 @@ const orderSchema = new mongoose.Schema({
     amount: {
         type: Number,
         require: true
+    },
+    status: {
+        type: String,
+        default: 'Pending'
     }
 
 },

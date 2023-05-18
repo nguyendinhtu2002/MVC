@@ -7,7 +7,7 @@ const getHome = async (req, res) => {
   if (req.session.user) {
     return res.redirect("/");
   }
-  return res.render("login_customer");
+  return res.render("login");
 };
 const register = async (req, res, next) => {
   const files = req.file;

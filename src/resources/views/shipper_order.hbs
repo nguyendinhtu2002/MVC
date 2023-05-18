@@ -93,7 +93,7 @@
                                 <td>{{this.amount}}</td>
                                 <td>${{this.total}}</td>
                                 <td>{{this.nameHub}}</td>
-                                <td>Pending</td>
+                                <td>{{this.status}}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -104,8 +104,10 @@
                                             <li><a href="/shipper/getDetail/{{this._id}}"
                                                     style="text-decoration: none;"><button
                                                         class="dropdown-item accept-btn">Detail</button></a></li>
-                                            <li><button class="dropdown-item accept-btn">Delivered</button></li>
-                                            <li><button class="dropdown-item decline-btn">Canceled</button></li>
+                                            <li><button class="dropdown-item accept-btn" onclick="handleClick('Delivered', '{{this._id}}')">Delivered</button>
+
+                                            </li>
+                                            <li><button class="dropdown-item decline-btn" onclick="handleClick('Canceled', '{{this._id}}')">Canceled</button></li>
                                         </ul>
                                     </div>
                                 </td>
@@ -138,7 +140,39 @@
                 imagePreview.src = "#";
             }
         });
+
+        function handleUpdateStatus() {
+            alert("Da click")
+            {
+                {
+                    !--axios.post("/shipper/api/updateStatus", { status: status })
+                        .then((response) => {
+                            alert(response.data)
+                            location.reload()
+                        })
+                        .catch((error) => {
+                            alert(error)
+                            location.reload()
+                        }) --}
+            }
+        }
+
     </script>
+
+    <script>
+        function handleClick(status,id) {
+            // Your code to be executed when the button is clicked
+            {{!-- alert("Button clicked!"); --}}
+            axios.post("/shipper/api/updateStatus", { status: status,id:id })
+                .then((response) => {
+                    alert("Thanh cong")
+                    location.reload()
+                })
+                .catch((error) => {
+                    alert(error)
+                    location.reload()
+                })
+        }
     </script>
     <style>
         .white-div {
