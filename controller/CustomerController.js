@@ -166,20 +166,21 @@ const getAddress = expressAsyncHandler(async (req, res, next) => {
 })
 const changePassword = expressAsyncHandler(async (req, res, next) => {
   try {
-    const passwordNew = await Shipper.findById(req.session.user.id)
+    const passwordNew = await Customer.findById(req.session.user.id);
     if (passwordNew) {
-      const { password } = req.body;
-      if (!passwordNew.matchPassword(password)) {
-        return res.render("updatepassword", { message: "Sai mat khau cus" })
-      }
-      else {
-        passwordNew.password = password
+      const { passwordOld, password } = req.body;
+      if (passwordOld && !passwordNew.matchPassword(passwordOld) && password) {
+        return res.render("changePasswordVendor", {
+          message: "Sai mat khau cũ",
+        });
+      } else {
+        passwordNew.password = password;
         await passwordNew.save();
-        return res.render("updatepassword", { message: "Thanh cong" })
+        return res.render("changePasswordVendor", { message: "Thanh cong" });
       }
     }
   } catch (error) {
-    return res.render("updatepassword", { message: "Co loi" })
+    return res.render("changePasswordVendor", { message: "Co loi" });
   }
 })
-module.exports = { register, Login, getHome, Logout, updateProfile, getAddress };
+module.exports = { register, Login, getHome, Logout, updateProfile, getAddress,changePassword };

@@ -20,13 +20,13 @@
             </label> -->
     </div>
     <div class="container path">
-        <a class="logo" href="customer_page.html">
+        <a class="logo" href="/">
             <b>SIMPLE</b>
         </a>
-        <a class="pathlast">
+        <a class="pathlast"  href="/">
             Product detail
         </a>
-        <a class="pathlast">
+        <a class="pathlast"  href="/">
             Product detail
         </a>
     </div>
@@ -48,31 +48,57 @@
         <div></div>
     </div>
 
-    <table class="container cart">
-        <tbody>
-            {{#each data.cart}}
-            <tr>
-                <td class="imgproduct">
+   <table class="container cart">
+    <tbody>
+        {{#each data.cart}}
+        <tr>
+            <td class="imgproduct" id="productItem_{{this.id}}">
+                <img id="productImage_{{this.id}}" src="" alt="Product Image">
+                <span>{{this.name}}</span>
+            </td>
+            <td class="price">{{this.price}}$</td>
+            <td class="quantity">
+                <span>{{this.quantity}}</span>
+            </td>
+            <td class="btndel">
+                <form>
+                    <button class="remove-button"
+                        onclick="removeProduct('{{../data._id}}', '{{this.id}}', {{this.price}}, {{this.quantity}})">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 
-                    <span>{{this.name}}</span>
-                </td>
-                <td class="price">{{this.price}}$</td>
-                <td class="quantity">
-                    <span>{{this.quantity}}</span>
-                </td>
-                <td class="btndel">
-                    <form>
+<script>
+    function getProductDetails(productId) {
+       
+        fetch(`/products/getDetailsProductApi/${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                const contentType = data.product.contentType; 
+                const imageBase64 = data.product.imageBase64; 
 
-                        <button class="remove-button"
-                            onclick="removeProduct('{{../data._id}}', '{{this.id}}', {{this.price}}, {{this.quantity}})"><i
-                                class="fa fa-trash"></i></button>
-                    </form>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <!-- <div class="container DueForOder"><strong class="FinalTotal"><strong>Total amount due for the order </strong>   </div> -->
+                const imgElement = document.getElementById(`productImage_${productId}`);
+                imgElement.src = `data:${contentType};base64,${imageBase64}`; 
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const cartItems = document.querySelectorAll('.container.cart .imgproduct');
+        cartItems.forEach(item => {
+            const productId = item.id.split('_')[1];
+
+            getProductDetails(productId);
+        });
+    });
+</script>
 
     <div class="container btncheckout">
         <div></div>

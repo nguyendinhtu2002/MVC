@@ -39,13 +39,14 @@
         <input type="text" class="quantity-input" value="1">
         <button class="add-button">+</button>
       </div>
-      <button class="add-to-cart-button">Thêm vào giỏ hàng</button>
+      <button class="add-to-cart-button">Add to cart</button>
       <br>
       <strong>Description: </strong>
       <div>{{product.description}}</div>
     </div>
   </div>
   <script>
+    console.log({{ product._id }})
     // Get the product information
     const product = {
       id: "{{ product._id }}",

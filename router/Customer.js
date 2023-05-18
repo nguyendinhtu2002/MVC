@@ -1,5 +1,5 @@
 const express = require("express");
-const { register, Login, Logout, updateProfile, getAddress } = require("../controller/CustomerController");
+const { register, Login, Logout, updateProfile, getAddress, changePassword } = require("../controller/CustomerController");
 const router = express.Router();
 const store = require("../middlerware/multer");
 const { checkAuth, checkCustomer } = require("../middlerware/AuthMiddlerware");
@@ -15,4 +15,6 @@ router.post("/login", Login);
 router.post("/logout", Logout);
 router.post("/updateProfile",checkAuth,checkCustomer,store.single("profilePicture"),updateProfile);
 router.get("/address",checkAuth,getAddress)
+router.post("/updatePassword", checkAuth, checkCustomer, changePassword);
+
 module.exports = router;

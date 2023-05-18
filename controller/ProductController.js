@@ -17,7 +17,7 @@ const getUpdateProduct = async (req, res, next) => {
       return res.render("edit_product", { data });
     }
     return res.redirect("/login");
-  } catch (error) { }
+  } catch (error) {}
 };
 const createProduct = async (req, res, next) => {
   const files = req.file;
@@ -174,6 +174,17 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
+const getDetailsProductApi = async (req, res, next) => {
+  const product = await Product.findOne({ _id: req.params.id }).lean();
+  if (product) {
+    return res.json({ product });
+  } else {
+    return res.json({
+      message: "Khong tim thay san pham",
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   getCreateProduct,
@@ -185,4 +196,5 @@ module.exports = {
   getUpdateProduct,
   deleteProduct,
   updateProduct,
+  getDetailsProductApi
 };

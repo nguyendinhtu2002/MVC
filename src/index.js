@@ -73,16 +73,17 @@ app.set("views", "./src/resources/views");
 app.use(express.static(path.join(__dirname, "../public")));
 const checkLoggedIn = (req, res, next) => {
   if (req.session.user) {
-    if (req.session.user.type === "Shipper" || req.session.user.type === "Vendor") {
+    if (
+      req.session.user.type === "Shipper" ||
+      req.session.user.type === "Vendor"
+    ) {
       res.locals.Type = true;
-    }
-    else {
-      res.locals.Type = false
+    } else {
+      res.locals.Type = false;
     }
     res.locals.loggedIn = true;
   } else {
-
-    res.locals.Type = false
+    res.locals.Type = false;
     res.locals.loggedIn = false;
   }
   next();
@@ -95,12 +96,10 @@ app.get("/", async (req, res) => {
 
   if (req.session.user) {
     if (req.session.user.type === "Shipper") {
-      return res.redirect("/shipper/getall/order")
-    }
-    else if (req.session.user.type === "Vendor") {
-      return res.redirect("/vendor/list_product")
-    }
-    else {
+      return res.redirect("/shipper/getall/order");
+    } else if (req.session.user.type === "Vendor") {
+      return res.redirect("/vendor/list_product");
+    } else {
       return res.render("homeCustomer", {
         products,
         helpers: {
@@ -130,13 +129,11 @@ app.get("/", async (req, res) => {
           },
           eq: function (value1, value2, options) {
             return value1 === value2 ? options.fn(this) : options.inverse(this);
-          }
+          },
         },
       });
-
     }
-  }
-  else {
+  } else {
     return res.render("homeCustomer", {
       products,
       helpers: {
@@ -166,10 +163,9 @@ app.get("/", async (req, res) => {
         },
         eq: function (value1, value2, options) {
           return value1 === value2 ? options.fn(this) : options.inverse(this);
-        }
+        },
       },
     });
-
   }
 });
 app.get("/info", async (req, res) => {
@@ -201,8 +197,7 @@ app.get("/info", async (req, res) => {
               },
               typeof: function (value) {
                 return typeof value;
-
-              }
+              },
             },
           });
         }
@@ -345,9 +340,18 @@ app.get("/product", async (req, res) => {
   });
 });
 
-app.get("/helper",(req,res)=>{
-   return res.render("helper")
-})
+app.get("/helper", (req, res) => {
+  return res.render("helper");
+});
+app.get("/changePassword", (req, res) => {
+  if (req.session.user.type === "Vendor") {
+    return res.render("changePasswordVendor");
+  } else if (req.session.user.type === "Shipper") {
+    return res.render("changePasswordShipper");
+  } else if (req.session.user.type === "Customer") {
+    return res.render("changePasswordCustomer");
+  }
+});
 app.use("/vendor", vendorrouter);
 app.use("/shipper", shipperRouter);
 app.use("/customer", customerRouter);
