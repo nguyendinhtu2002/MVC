@@ -78,7 +78,7 @@ const listProduct = async (req, res, next) => {
 const listAll = async (req, res, next) => {
   try {
     const products = await Product.find({}).lean();
-    return res.render("homeCustomer", { products });
+    return res.json(products);
   } catch (error) {
     return res.render("homeCustomer", { message: "Error" });
   }
