@@ -5,9 +5,12 @@ const { generateToken, refreshToken } = require("../utils/generateToken");
 const fs = require("fs");
 const Order = require("../model/Orders");
 const Customer = require("../model/Customer");
+const DistributionHub = require("../model/DistributionHub");
 
 
 const register = async (req, res, next) => {
+  const data = await DistributionHub.find({}).lean();
+
   const files = req.file;
   const schema = Joi.object({
     username: Joi.string()
@@ -39,6 +42,7 @@ const register = async (req, res, next) => {
     return res.render("register_shipper", {
       message: error.details[0].message,
       errors,
+      data
     });
   }
   try {
@@ -48,6 +52,7 @@ const register = async (req, res, next) => {
     if (existingShipper) {
       return res.render("register_shipper", {
         message: "Username is already taken",
+        data
       });
     }
 
@@ -77,6 +82,7 @@ const register = async (req, res, next) => {
     console.log(error);
     return res.render("register_shipper", {
       message: "Internal server error",
+      data
     });
   }
 };
