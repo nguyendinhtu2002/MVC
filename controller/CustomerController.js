@@ -183,7 +183,7 @@ const changePassword = expressAsyncHandler(async (req, res, next) => {
             message: "Success",
             status: 1,
           },
-          res.redirect("/")
+          res.redirect("/info")
         );
       }
     }
