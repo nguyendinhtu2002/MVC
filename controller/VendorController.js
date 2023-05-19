@@ -151,20 +151,30 @@ const updateProfile = expressAsyncHandler(async (req, res, next) => {
 const changePassword = expressAsyncHandler(async (req, res, next) => {
   try {
     const passwordNew = await Vendor.findById(req.session.user.id);
+    const { passwordOld, password } = req.body;
     if (passwordNew) {
-      const { passwordOld, password } = req.body;
-      if (passwordOld && !passwordNew.matchPassword(passwordOld) && password) {
+      const tempt = await passwordNew.matchPassword(passwordOld)
+      if (!tempt) {
         return res.render("changePasswordVendor", {
           message: "Sai mat khau cũ",
+          status: 1,
         });
       } else {
         passwordNew.password = password;
         await passwordNew.save();
-        return res.render("changePasswordVendor", { message: "Thanh cong" });
+        // return res.render("changePasswordVendor", { message: "Thanh cong", status: 1 });
+        return res.render(
+          "changePasswordVendor",
+          {
+            message: "Success",
+            status: 1,
+          },
+          res.redirect("/")
+        );
       }
     }
   } catch (error) {
-    return res.render("changePasswordVendor", { message: "Co loi" });
+    return res.render("changePasswordVendor", { message: "Co loi", status: 0 });
   }
 });
 module.exports = {

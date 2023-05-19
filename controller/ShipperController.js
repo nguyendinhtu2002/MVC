@@ -204,9 +204,9 @@ const updateStatus = expressAsyncHandler(async (req, res, next) => {
       const { status } = req.body;
       foundOrder.status = status;
       await foundOrder.save();
-      return res.json({ message: "Thành công rồi" });
+      return res.json({ message: "Success" });
     } else {
-      return res.json({ message: "Không tìm thấy id" });
+      return res.json({ message: "Not Found id" });
     }
   } catch (error) {
     next(error);
@@ -218,18 +218,26 @@ const changePassword = expressAsyncHandler(async (req, res, next) => {
     if (passwordNew) {
       const { passwordOld, password } = req.body;
       if (passwordOld && !passwordNew.matchPassword(passwordOld) && password) {
-        return res.render("changePasswordVendor", {
+        return res.render("changePasswordShipper", {
           message: "Sai mat khau cũ",
+          status: 0,
         });
       } else {
         passwordNew.password = password;
         await passwordNew.save();
-        return res.render("changePasswordVendor", { message: "Thanh cong" });
+        return res.render(
+          "changePasswordShipper",
+          {
+            message: "Success",
+            status: 1,
+          },
+          res.redirect("/")
+        );
       }
     }
   } catch (error) {
-    return res.render("changePasswordVendor", { message: "Co loi" });
+    return res.render("changePasswordShipper", { message: "Co loi", status: 0 });
   }
 });
 
-module.exports = { register, Login, getHome, Logout, getAll, getbyId, updateProfile, updateStatus,changePassword };
+module.exports = { register, Login, getHome, Logout, getAll, getbyId, updateProfile, updateStatus, changePassword };

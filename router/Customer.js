@@ -15,6 +15,6 @@ router.post("/login", Login);
 router.post("/logout", Logout);
 router.post("/updateProfile",checkAuth,checkCustomer,store.single("profilePicture"),updateProfile);
 router.get("/address",checkAuth,getAddress)
-router.post("/updatePassword", checkAuth, checkCustomer, changePassword);
+router.post("/api/updatePassword", checkAuth, checkCustomer, changePassword);
 
 module.exports = router;

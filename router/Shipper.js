@@ -45,9 +45,9 @@ router.post("/logout", Logout);
 
 router.get("/getall/order", checkAuth, checkShipper, getAll);
 router.post("/change_profile", store.single("profilePicture"), updateProfile);
-router.post("/api/updateStatus", updateStatus);
+router.post("/updateStatus", updateStatus);
 
 router.get("/getDetail/:id", checkAuth, checkShipper, getbyId);
-router.post("/updatePassword", checkAuth, checkShipper, changePassword);
+router.post("/api/updatePassword", checkAuth, checkShipper, changePassword);
 
 module.exports = router;

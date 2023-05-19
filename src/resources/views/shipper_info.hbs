@@ -12,7 +12,8 @@
         <div class="col">
           <div class="justify-content-center d-flex">
             <img id="preview-image" src="data:{{shipper.contentType}};base64,{{shipper.imageBase64}}"
-              alt="Preview Image" style="max-width: 50%; height: auto;">
+              alt="Preview Image" style="max-wi
+              dth: 50%; height: auto;">
           </div>
           <h3 class="text-center">Your image</h3>
           <form method="POST" action="/shipper/change_profile" enctype="multipart/form-data">
@@ -40,9 +41,11 @@
             </div>
 
           </form>
-          <a class="d-flex justify-content-center align-items-center mt-2" href="/changePassword" style="text-decoration: none;">
-            <button style="width:70%; background-color:#DE4F11; color: white;" type="submit" class="btn rounded-pill">Change password</button>
-            </a>
+          <a class="d-flex justify-content-center align-items-center mt-2" href="/changePassword"
+            style="text-decoration: none;">
+            <button style="width:70%; background-color:#DE4F11; color: white;" type="submit"
+              class="btn rounded-pill">Change password</button>
+          </a>
           <form action="shipper/logout" method="POST">
             <div class="d-flex justify-content-center align-items-center mt-2">
 

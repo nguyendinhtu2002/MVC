@@ -154,8 +154,8 @@ const getAddress = expressAsyncHandler(async (req, res, next) => {
   try {
     const getaddress = await Customer.findById(req.session.user.id)
     if (getaddress) {
-      const { _id, address,name } = getaddress;
-      const newObj = { _id, address,name };
+      const { _id, address, name } = getaddress;
+      const newObj = { _id, address, name };
 
       return res.json(newObj)
     }
@@ -170,17 +170,25 @@ const changePassword = expressAsyncHandler(async (req, res, next) => {
     if (passwordNew) {
       const { passwordOld, password } = req.body;
       if (passwordOld && !passwordNew.matchPassword(passwordOld) && password) {
-        return res.render("changePasswordVendor", {
+        return res.render("changePasswordCustomer", {
           message: "Sai mat khau cũ",
+          status: 0,
         });
       } else {
         passwordNew.password = password;
         await passwordNew.save();
-        return res.render("changePasswordVendor", { message: "Thanh cong" });
+        return res.render(
+          "changePasswordCustomer",
+          {
+            message: "Success",
+            status: 1,
+          },
+          res.redirect("/")
+        );
       }
     }
   } catch (error) {
-    return res.render("changePasswordVendor", { message: "Co loi" });
+    return res.render("changePasswordCustomer", { message: "Co loi",status:0 });
   }
 })
-module.exports = { register, Login, getHome, Logout, updateProfile, getAddress,changePassword };
+module.exports = { register, Login, getHome, Logout, updateProfile, getAddress, changePassword };

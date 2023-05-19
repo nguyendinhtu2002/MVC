@@ -165,7 +165,7 @@
             {{!-- alert("Button clicked!"); --}}
             axios.post("/shipper/api/updateStatus", { status: status,id:id })
                 .then((response) => {
-                    alert("Thanh cong")
+                    alert("Success")
                     location.reload()
                 })
                 .catch((error) => {
