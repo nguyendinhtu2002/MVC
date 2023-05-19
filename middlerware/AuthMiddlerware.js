@@ -10,7 +10,7 @@ const checkAuth = (req, res, next) => {
 };
 const checkAuthAPI = (req, res, next) => {
   if (!req.session.user) {
-    return res.status(401).json({message:"Still Not Login"});
+    return res.status(401).json({ message: "Still Not Login" });
   }
 
   next();
